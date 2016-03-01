@@ -2,73 +2,74 @@ import { Injectable } from 'angular2/core';
 
 @Injectable()
 export class PostsCollection {
+
   // our handler for wp-api client.
   collection;
-  //fetched posts
-  posts = [];
-  //featuredImage holds our posts featured categories
-  featuredImage = [];
-  //holds our posts featured images
-  postsCats = [];
-  //holds our posts featured categories
-  postsTags = [];
+  posts:Array<PostResponse> = [];
 
   constructor() {
   }
 
-  fetchPosts(perPage: number, page: number, type: string){
+  fetchPosts(perPage:number, page:number, type:string) {
+
     //initialize query parameters in data
     this.collection = new window['wp']['api']['collections']['Posts']();
     this.collection.fetch({
       data: {
         _embed: true,
-       // page: page,
+        page: page,
         per_page: perPage
       }
     }).done((posts) => {
-      for (var post of posts) {
-
-        /* due to the weird attributes names provided by the official wp rest api v2.
-         post._embedded['https://api.w.org/term'][0] : represents the categories of the posts.
-         post._embedded['https://api.w.org/term'][1] : represents the tags of the posts.
-         post._embedded['https://api.w.org/featuredmedia'][0] : represents the featured image.*/
-
-        this.postsCats.push(post._embedded['https://api.w.org/term'][0]);
-        this.postsTags.push(post._embedded['https://api.w.org/term'][1]);
-
-        /* check if the post has featured image && check if it has a medium size */
-        if(post._embedded.hasOwnProperty('https://api.w.org/featuredmedia')
-          && post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.hasOwnProperty('medium')) {
-
-          this.featuredImage.push(post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.medium.source_url);
-        }
-        else
-          this.featuredImage.push("");
-      }
-      this.posts = posts;
+      this.InitializeResponse(posts);
     });
   }
-  fetchMore(){
+
+  fetchMore() {
     this.collection.more().done((posts) => {
-      for (var post of posts) {
-        this.postsCats.push(post._embedded['https://api.w.org/term'][0]);
-        this.postsTags.push(post._embedded['https://api.w.org/term'][1]);
-
-        /* check if the post has featured image && check if it has a medium size */
-        if (post._embedded.hasOwnProperty('https://api.w.org/featuredmedia')
-          && post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.hasOwnProperty('medium')) {
-
-          this.featuredImage.push(post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.medium.source_url);
-        }
-        else
-          this.featuredImage.push("");
-      }
-      this.posts = this.posts.concat(posts);
+      this.InitializeResponse(posts);
     });
+  }
+
+  InitializeResponse(posts) {
+    for (var post of posts) {
+      /* due to the weird attributes names provided by the official wp rest api v2.
+       post._embedded['https://api.w.org/term'][0] : represents the categories of the posts.
+       post._embedded['https://api.w.org/term'][1] : represents the tags of the posts.
+       post._embedded['https://api.w.org/featuredmedia'][0] : represents the featured image.*/
+
+      var postResponse:PostResponse;
+      postResponse = <any>post;
+      postResponse.postsCats = post._embedded['https://api.w.org/term'][0];
+      postResponse.postsCats = post._embedded['https://api.w.org/term'][1];
+
+      /* check if the post has featured image && check if it has a medium size */
+      if (post._embedded.hasOwnProperty('https://api.w.org/featuredmedia')
+        && post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.hasOwnProperty('medium')) {
+
+        postResponse.featuredImage = post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.medium.source_url;
+      }
+      this.posts.push(postResponse);
+    }
   }
 }
 
+export interface PostResponse{
+  featuredImage : string;
+  postsCats: Array<any>;
+  postsTags: Array<any>;
+}
 
+@Injectable()
+export class PostsCollection {
+
+  // our handler for wp-api client.
+  collection;
+  posts:Array<PostResponse> = [];
+
+  constructor() {
+  }
+}
 
 
 

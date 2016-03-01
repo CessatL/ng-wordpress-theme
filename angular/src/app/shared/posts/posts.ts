@@ -1,14 +1,13 @@
 import { Input, Component } from 'angular2/core';
-import { DatePipe } from '../../pipes/date';
-
+import { PostCmp } from './../post/post';
 import { PostsCollection } from '../../../assets/service-worker';
 
 @Component({
-    selector: 'posts',
-    viewProviders: [PostsCollection],
-    template: require('./posts.html'),
-    styles: [require('./posts.css')],
-    pipes: [DatePipe]
+  selector: 'posts',
+  viewProviders: [PostsCollection],
+  template: require('./posts.html'),
+  styles: [require('./posts.css')],
+  directives: [PostCmp]
 })
 export class PostsCmp {
 
