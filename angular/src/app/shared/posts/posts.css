@@ -1,0 +1,12 @@
+.post-list-item {
+  max-width: 1000px;
+  margin: 0 auto;
+  list-style: none;
+}
+.post-list-item li{
+  display: inline-block;
+  margin: 15px 0 0 15px;
+}
+.post-card{
+  width: 300px;
+}

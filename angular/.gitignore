@@ -31,33 +31,31 @@ Icon?
 Thumbs.db
 
 # Node Files #
-/angular/node_modules
-/angular/bower_components
-/angular/npm-debug.log
+/node_modules
+/bower_components
+npm-debug.log
 
 # Coverage #
 /coverage/
 
 # Typing #
-/angular/src/typings/tsd/
-/angular/typings/
+/src/typings/tsd/
+/typings/
 /tsd_typings/
 
 # Dist #
-/angular/dist
+/dist
 /public/__build__/
 /src/*/__build__/
 /__build__/**
 /public/dist/
-angular/src/*/dist/
-angular/dist/**
+/src/*/dist/
+/dist/**
 .webpack.json
-
 
 # Doc #
 /doc/
 
 # IDE #
 .idea/
-angula/.idea/
 *.swp

@@ -1,0 +1,27 @@
+<ul class="post-list-item">
+  <li *ngFor="#post of service.posts #i = index">
+    <div class="post-card mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title" [style.height]="'200px'"
+      [style.backgroundImage]="'url('+ service.featuredImage[i] + ')'">
+        <h2 class="mdl-card__title-text">{{post.title.rendered}}</h2>
+      </div>
+      <div class="mdl-card__supporting-text" [innerHTML]="post.excerpt.rendered">
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          Read More
+        </a>
+      </div>
+      <div class="mdl-card__menu">
+        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">share</i>
+        </button>
+      </div>
+    </div>
+  </li>
+  </ul>
+<p>Showing {{service.collection.state.currentPage}} / {{service.collection.state.totalPages}} | Total Posts: {{service.collection.state.totalObjects}}</p>
+
+<button (click)="loadMore()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+        [disabled]="service.collection.state.currentPage == service.collection.state.totalPages"
+      >Load More</button>

@@ -1,0 +1,64 @@
+<template [ngIf]="post">
+    <!--<post-image [style.backgroundImage]="'url(' + post.thumbnail_images?.full?.url + ')'">
+        <post-body class="blur">-->
+            <h1 class="center" [innerHtml]="post.title"></h1>
+            <div class="container">
+                <post-meta>
+                    <span class="post-date">
+                    <i>posted on</i> {{post.date | DatePipe:'medium'}}
+                </span>
+                    <span class="post-author">
+                    by {{post.author.name}}
+                </span>
+                </post-meta>
+                <post-share><share-buttons></share-buttons></post-share>
+                <post-content [innerHtml]="post.content"></post-content>
+                <post-comments>
+                    <disqus *ngIf="comments" [disqus_shortname]="'just4test'"></disqus>
+                </post-comments>
+            </div>
+     <!--  </post-body>
+    </post-image>-->
+</template>
+
+
+
+<!--<post-header>
+        <post-image [style.backgroundImage]="'url(' + post.thumbnail_images?.full?.url + ')'">
+            <post-title class="blur center">
+                <h1 [innerHtml]="post.title"></h1>
+            </post-title>
+        </post-image>   
+    </post-header>
+    <post-body>
+    <div class="container">
+        <post-meta>
+            <span class="post-date">
+                <i>posted on</i> {{post.date | DatePipe:'medium'}}
+            </span>   
+            <span class="post-author">
+                by {{post.author.name}}
+            </span>
+        </post-meta>
+        <post-content [innerHtml]="post.content"></post-content>
+    </div>
+    </post-body>-->
+
+<!--<div class="card-action">
+            <div class="post-cat">
+                <span *ngFor="#cat of post.categories" (click)="onCatClick(cat.slug)" class="chip">{{cat.title}}</span>
+            </div>
+            <div *ngIf="post.tags.length > 0" class="post-tag">
+                <h4 class="tag-title"><i class="fa fa-tags"></i> Tags</h4>
+                <span *ngFor="#tag of post.tags" (click)="onTagClick(tag.slug)" class="chip">{{tag.title}}</span>
+            </div>
+
+            <div class="post-nav" role="group">
+                <div *ngIf="post.previous_url" class="post-next" (click)="onNavClick(post.previous_url)">
+                    <i class="fa fa-chevron-left"></i> Previous Post
+                </div>
+                <div *ngIf="post.next_url" class="post-prev" (click)="onNavClick(post.next_url)">
+                    Next Post <i class="fa fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>-->
