@@ -1,7 +1,7 @@
 import { Injectable } from 'angular2/core';
 
 @Injectable()
-export class PostsCollection {
+export class CollectionService {
 
   // our handler for wp-api client.
   collection;
@@ -55,13 +55,18 @@ export class PostsCollection {
 }
 
 export interface PostResponse{
+  /*
+  our PostResponse will already contain all post attributes,
+  but we need to add extra attributes to the root to make it
+  easy to call from the Post template.
+   */
   featuredImage : string;
   postsCats: Array<any>;
   postsTags: Array<any>;
 }
 
 @Injectable()
-export class PostsCollection {
+export class SingleService {
 
   // our handler for wp-api client.
   collection;
