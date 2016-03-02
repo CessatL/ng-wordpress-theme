@@ -1,11 +1,18 @@
 ToDo List:
 
 Technical:
-  1 - Get main menu items from wordpress menus.
-  2 - Post component.
-  3 - Loader Cmp: our service, all wordpress requests from here.
+
+  1 - ~~SinglePost component~~.
+  2 - ~~service-worker: our service, all wordpress requests from here.~~
+  3 - ~~posts collection component~~
+  4 - tags/tag component
+  5 - cats/cat component
+  6 - search component
+  7 - author component
+  8 - page component
+  9 - Get the main-menu from wordpress menus using `wp-api.js`.
 
 Design:
 
-  1 - install the masonry plugin `npm install masonry-layout --save` and import it in polyfills.ts
-  2 - posts.html display cats, tags...
+  1 - posts.html display date, tags, cats
+  2 - find a solution for page transition animation
