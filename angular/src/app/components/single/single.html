@@ -1,4 +1,4 @@
-<post  [slug]="slug" [type]="type"></post>
+<post *ngIf="service.post" [post]="service.post"></post>
 
 
 <!--<post-nav [post]="post | async"></post-nav>

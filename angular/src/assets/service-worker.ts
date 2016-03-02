@@ -21,40 +21,19 @@ export class CollectionService {
         per_page: perPage
       }
     }).done((posts) => {
-      this.InitializeResponse(posts);
+      this.posts = InitializeResponse(posts);
     });
   }
 
   fetchMore() {
     this.collection.more().done((posts) => {
-      this.InitializeResponse(posts);
+      this.posts = this.posts.concat(InitializeResponse(posts));
     });
   }
 
-  InitializeResponse(posts) {
-    for (var post of posts) {
-      /* due to the weird attributes names provided by the official wp rest api v2.
-       post._embedded['https://api.w.org/term'][0] : represents the categories of the posts.
-       post._embedded['https://api.w.org/term'][1] : represents the tags of the posts.
-       post._embedded['https://api.w.org/featuredmedia'][0] : represents the featured image.*/
-
-      var postResponse:PostResponse;
-      postResponse = <any>post;
-      postResponse.postsCats = post._embedded['https://api.w.org/term'][0];
-      postResponse.postsCats = post._embedded['https://api.w.org/term'][1];
-
-      /* check if the post has featured image && check if it has a medium size */
-      if (post._embedded.hasOwnProperty('https://api.w.org/featuredmedia')
-        && post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.hasOwnProperty('medium')) {
-
-        postResponse.featuredImage = post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.medium.source_url;
-      }
-      this.posts.push(postResponse);
-    }
-  }
 }
 
-export interface PostResponse{
+export class PostResponse{
   /*
   our PostResponse will already contain all post attributes,
   but we need to add extra attributes to the root to make it
@@ -63,19 +42,58 @@ export interface PostResponse{
   featuredImage : string;
   postsCats: Array<any>;
   postsTags: Array<any>;
+  constructor() {}
 }
 
 @Injectable()
 export class SingleService {
 
-  // our handler for wp-api client.
-  collection;
-  posts:Array<PostResponse> = [];
-
+  single;
+  post: PostResponse;
   constructor() {
+  }
+  getPost(slug: string){
+    this.single = new window['wp']['api']['collections']['Posts']();
+    this.single.fetch({
+      data: {
+        _embed: true,
+        filter: {
+          name: slug
+        }
+      }
+    }).done((posts) => {
+      this.post = InitializeResponse(posts)[0];
+      console.log(this.post);
+    });
   }
 }
 
+function InitializeResponse(posts) {
+  var results: Array<PostResponse> = [];
+  for (var post of posts) {
+    /* due to the weird attributes names provided by the official wp rest api v2.
+     post._embedded['https://api.w.org/term'][0] : represents the categories of the posts.
+     post._embedded['https://api.w.org/term'][1] : represents the tags of the posts.
+     post._embedded['https://api.w.org/featuredmedia'][0] : represents the featured image.*/
+
+    var postResponse:PostResponse;
+    postResponse = post;
+    postResponse.postsCats = post._embedded['https://api.w.org/term'][0];
+    postResponse.postsCats = post._embedded['https://api.w.org/term'][1];
+
+    /* check if the post has featured image && check if it has a medium size */
+    if (post._embedded.hasOwnProperty('https://api.w.org/featuredmedia')
+      && post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.hasOwnProperty('medium')) {
+
+      postResponse.featuredImage = post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.medium.source_url;
+    }
+    else
+      postResponse.featuredImage = "";
+
+    results.push(postResponse);
+  }
+  return results;
+}
 
 
 //import { Http } from 'angular2/http';

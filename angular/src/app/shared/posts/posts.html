@@ -1,10 +1,11 @@
-<ul class="post-list-item">
-  <li *ngFor="#post of service.posts">
-    <post [post]="post"></post>
-  </li>
-  </ul>
-<p>Showing {{service.collection.state.currentPage}} / {{service.collection.state.totalPages}} | Total Posts: {{service.collection.state.totalObjects}}</p>
+<div class="posts-list">
+<post *ngFor="#post of service.posts" [post]="post"></post>
+</div>
+<div class="loadmore">
+
+  <p>Showing {{service.collection.state.currentPage}} / {{service.collection.state.totalPages}} | Total Posts: {{service.collection.state.totalObjects}}</p>
 
 <button (click)="loadMore()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
     [disabled]="service.collection.state.currentPage == service.collection.state.totalPages"
   >Load More</button>
+</div>

@@ -1,12 +1,20 @@
-.post-list-item {
-  max-width: 1000px;
+.posts-list{
+  -moz-column-width: 300px;
+  -webkit-column-width: 300px;
+  -moz-column-gap: 5px;
+  -webkit-column-gap: 5px;
+
+  display: block;
+  width: 960px;
   margin: 0 auto;
-  list-style: none;
 }
-.post-list-item li{
+post{
   display: inline-block;
-  margin: 15px 0 0 15px;
+  margin:  0.25rem;
+  padding:  5px;
+  width:  300px;
 }
-.post-card{
-  width: 300px;
+.loadmore{
+  maring: 0 auto;
+  text-align: center;
 }
