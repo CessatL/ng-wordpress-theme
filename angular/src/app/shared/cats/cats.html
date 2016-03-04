@@ -1,0 +1,17 @@
+<ul class="cats-list-item mdl-list">
+  <li *ngFor="#cat of wp.cats" class="mdl-list__item">
+    <a [routerLink]="['Category', { slug: cat.slug }]" class="mdl-list__item-primary-content">
+      <span class="mdl-badge" [attr.data-badge]="cat.count">{{cat.name}}</span>
+    </a>
+  </li>
+</ul>
+
+<div class="loadmore">
+
+  <p>Showing {{wp.service.state.currentPage}} / {{wp.service.state.totalPages}} | Total Posts: {{wp.service.state.totalObjects}}</p>
+
+  <button (click)="loadMore()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+          [disabled]="wp.service.state.currentPage == wp.service.state.totalPages"
+  >Load More</button>
+</div>
+

@@ -1,8 +1,8 @@
 .posts-list{
-  -moz-column-width: 300px;
-  -webkit-column-width: 300px;
-  -moz-column-gap: 5px;
-  -webkit-column-gap: 5px;
+  /*-moz-column-width: 300px;*/
+  /*-webkit-column-width: 300px;*/
+  /*-moz-column-gap: 5px;*/
+  /*-webkit-column-gap: 5px;*/
 
   display: block;
   width: 960px;

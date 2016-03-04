@@ -1,33 +1,40 @@
 import { Injectable } from 'angular2/core';
 
-@Injectable()
-export class CollectionService {
+export class Service{
 
   // our handler for wp-api client.
-  collection;
+  service;
+
+  constructor(){
+  }
+}
+@Injectable()
+export class CollectionService extends Service{
+
   posts:Array<PostResponse> = [];
 
-  constructor() {
-  }
+  constructor(){ super() }
 
   fetchPosts(perPage:number, page:number, type:string) {
 
-    //initialize query parameters in data
-    this.collection = new window['wp']['api']['collections']['Posts']();
-    this.collection.fetch({
+    //Initializing posts query
+    var postsQueryArgs = {
       data: {
         _embed: true,
         page: page,
         per_page: perPage
       }
-    }).done((posts) => {
-      this.posts = InitializeResponse(posts);
+    };
+
+    this.service = new window['wp']['api']['collections']['Posts']();
+    this.service.fetch(postsQueryArgs).done((posts) => {
+      this.posts = InitializePosts(posts);
     });
   }
 
   fetchMore() {
-    this.collection.more().done((posts) => {
-      this.posts = this.posts.concat(InitializeResponse(posts));
+    this.service.more().done((posts) => {
+      this.posts = this.posts.concat(InitializePosts(posts));
     });
   }
 
@@ -42,33 +49,38 @@ export class PostResponse{
   featuredImage : string;
   postsCats: Array<any>;
   postsTags: Array<any>;
-  constructor() {}
+  constructor() { }
 }
 
 @Injectable()
-export class SingleService {
+export class SingleService extends Service{
 
-  single;
   post: PostResponse;
-  constructor() {
-  }
+
+  constructor(){ super() }
+
   getPost(slug: string){
-    this.single = new window['wp']['api']['collections']['Posts']();
-    this.single.fetch({
+
+    //Initializing post query
+    var postsQueryArgs = {
       data: {
         _embed: true,
         filter: {
           name: slug
         }
       }
-    }).done((posts) => {
-      this.post = InitializeResponse(posts)[0];
-      console.log(this.post);
+    };
+
+    this.service = new window['wp']['api']['collections']['Posts']();
+    this.service.fetch(postsQueryArgs).done((posts) => {
+
+      // posts[0] holds the post we are looking for.
+      this.post = InitializePosts(posts)[0];
     });
   }
 }
 
-function InitializeResponse(posts) {
+function InitializePosts(posts) {
   var results: Array<PostResponse> = [];
   for (var post of posts) {
     /* due to the weird attributes names provided by the official wp rest api v2.
@@ -79,7 +91,7 @@ function InitializeResponse(posts) {
     var postResponse:PostResponse;
     postResponse = post;
     postResponse.postsCats = post._embedded['https://api.w.org/term'][0];
-    postResponse.postsCats = post._embedded['https://api.w.org/term'][1];
+    postResponse.postsTags = post._embedded['https://api.w.org/term'][1];
 
     /* check if the post has featured image && check if it has a medium size */
     if (post._embedded.hasOwnProperty('https://api.w.org/featuredmedia')
@@ -94,7 +106,71 @@ function InitializeResponse(posts) {
   }
   return results;
 }
+export class CatsService extends Service{
 
+  cats;
+  constructor(){ super()}
+
+  fetchCats() {
+
+    this.service = new window['wp']['api']['collections']['Categories']();
+
+    this.service.fetch().done((cats) => {
+      this.cats = cats;
+    });
+
+  }
+  fetchMore() {
+    this.service.more().done((cats) => {
+      this.cats = this.cats.concat(cats);
+    });
+  }
+}
+export class CatService extends Service{
+
+  cat;
+
+  constructor(){ super()}
+
+  fetchCat(slug: string) {
+    //Initializing category query
+    var tagsQueryArgs = {
+      data: {
+        slug: slug
+      }
+    };
+    this.service = new window['wp']['api']['collections']['Categories']();
+    this.service.fetch(tagsQueryArgs).done((cats) => {
+      this.cat = cats[0];
+    });
+  }
+}
+export class TagService extends Service{
+
+  tags;
+  constructor(){ super()}
+
+  fetchTags(){
+    //Initializing tag query
+    var tagsQueryArgs = {
+      data: {
+        _embed: true
+      }
+    };
+    this.service = new window['wp']['api']['collections']['Tags']();
+    console.log(this.service.fetch());
+
+    this.service.fetch(tagsQueryArgs).done((tags) => {
+
+      this.tags = tags;
+    });
+  }
+
+  fetchMore(){
+    this.service.more()
+  }
+
+}
 
 //import { Http } from 'angular2/http';
 //import { Injectable } from 'angular2/core';

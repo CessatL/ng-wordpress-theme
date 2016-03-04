@@ -6,7 +6,7 @@
   2. ~~service-worker: our service, all wordpress requests from here.~~
   3. ~~posts collection component~~
   4. tags/tag component
-  5. cats/cat component
+  5. ~~cats/cat component~~
   6. search component
   7. author component
   8. page component

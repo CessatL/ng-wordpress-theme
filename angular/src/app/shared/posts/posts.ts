@@ -15,12 +15,12 @@ export class PostsCmp {
   @Input() page:number;
   @Input() type:string;
 
-  constructor(private service: CollectionService) {
+  constructor(private wp: CollectionService) {
   }
   ngOnInit(){
-    this.service.fetchPosts(this.perPage, this.page, this.type);
+    this.wp.fetchPosts(this.perPage, this.page, this.type);
   }
   loadMore() {
-    this.service.fetchMore();
+    this.wp.fetchMore();
   }
 }
