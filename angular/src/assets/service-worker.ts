@@ -8,6 +8,22 @@ export class Service{
   constructor(){
   }
 }
+
+export class PostResponse{
+  /*
+   our PostResponse will already contain all post attributes,
+   but we need to add extra attributes to the root to make it
+   easy to call from the Post template.
+   */
+  featuredImage : string;
+  postsCats: Array<any>;
+  postsTags: Array<any>;
+  constructor() { }
+}
+
+/*================================
+   COLLECTION OF POSTS SERVICE
+ ================================*/
 @Injectable()
 export class CollectionService extends Service{
 
@@ -39,19 +55,9 @@ export class CollectionService extends Service{
   }
 
 }
-
-export class PostResponse{
-  /*
-  our PostResponse will already contain all post attributes,
-  but we need to add extra attributes to the root to make it
-  easy to call from the Post template.
-   */
-  featuredImage : string;
-  postsCats: Array<any>;
-  postsTags: Array<any>;
-  constructor() { }
-}
-
+/*================================
+        SINGLE POST SERVICE
+ ================================*/
 @Injectable()
 export class SingleService extends Service{
 
@@ -106,6 +112,10 @@ function InitializePosts(posts) {
   }
   return results;
 }
+
+/*==============================
+ COLLECTION OF CATEGORIES SERVICE
+ ==============================*/
 export class CatsService extends Service{
 
   cats;
@@ -126,6 +136,10 @@ export class CatsService extends Service{
     });
   }
 }
+
+/*================================
+     SINGLE CATEGORY SERVICE
+ ================================*/
 export class CatService extends Service{
 
   cat;
@@ -145,23 +159,17 @@ export class CatService extends Service{
     });
   }
 }
+/*================================
+    COLLECTION OF TAGS SERVICE
+ ================================*/
 export class TagService extends Service{
 
   tags;
   constructor(){ super()}
 
   fetchTags(){
-    //Initializing tag query
-    var tagsQueryArgs = {
-      data: {
-        _embed: true
-      }
-    };
     this.service = new window['wp']['api']['collections']['Tags']();
-    console.log(this.service.fetch());
-
-    this.service.fetch(tagsQueryArgs).done((tags) => {
-
+    this.service.fetch().done((tags) => {
       this.tags = tags;
     });
   }
@@ -171,6 +179,64 @@ export class TagService extends Service{
   }
 
 }
+/*================================
+   COLLECTION OF AUTHORS SERVICE
+ ================================*/
+export class AuthorsService extends Service{
+
+  authors;
+  constructor(){ super()}
+
+  fetchAuthor(){
+    //Initializing category query
+    var tagsQueryArgs = {
+      data: {
+      //  slug: slug
+      }
+    };
+    this.service = new window['wp']['api']['collections']['Users']();
+    this.service.fetch(tagsQueryArgs).done((authors) => {
+      console.log(authors);
+      this.authors = authors;
+    });
+  }
+
+  fetchMore(){
+    this.service.more().done((authors) => {
+      this.authors = this.authors.concat(authors);
+    });
+  }
+
+}
+/*================================
+       SINGLE AUTHOR SERVICE
+ ================================*/
+
+export class AuthorService extends Service{
+
+  author;
+  constructor(){ super()}
+
+  fetchAuthor(slug){
+    //Initializing category query
+    var tagsQueryArgs = {
+      data: {
+        slug: slug
+      }
+    };
+    this.service = new window['wp']['api']['collections']['Users']();
+    this.service.fetch(tagsQueryArgs).done((authors) => {
+      console.log(authors);
+      this.author = authors[0];
+    });
+  }
+
+  fetchMore(){
+    this.service.more()
+  }
+
+}
+
 
 //import { Http } from 'angular2/http';
 //import { Injectable } from 'angular2/core';
