@@ -36,6 +36,7 @@ export class CollectionService extends Service{
     //Initializing posts query
     var postsQueryArgs = {
       data: {
+        //search:
         _embed: true,
         page: page,
         per_page: perPage

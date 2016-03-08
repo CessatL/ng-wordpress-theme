@@ -11,10 +11,13 @@ import {CatCmp} from './shared/cats/cat';
 import {AuthorCmp} from './shared/author/author';
 import {AuthorsCmp} from './shared/author/authors';
 
+//import {MaterializeDirective} from './shared/materialize/index';
+import {MaterializeDirective} from 'angular2-materialize';
+
 @Component({
   selector: 'app',
   providers: [ ...FORM_PROVIDERS ],
-  directives: [ ...ROUTER_DIRECTIVES, MenuCmp, BlogCmp, SingleCmp, CatsCmp,AuthorCmp],
+  directives: [ ...ROUTER_DIRECTIVES, MenuCmp, BlogCmp, SingleCmp, CatsCmp,AuthorCmp, MaterializeDirective],
   styles: [require('./app.css')],
   encapsulation: ViewEncapsulation.None,
   template: require('./app.html')
@@ -34,5 +37,11 @@ import {AuthorsCmp} from './shared/author/authors';
 export class App {
   //use window['template_directory'] for path to your wp theme
   constructor() {
+
+  }
+  ngOnInit(){
+    //$('.button-collapse')['sideNav']();
+  }
+  slideMenu(){
   }
 }

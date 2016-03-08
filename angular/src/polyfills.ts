@@ -32,3 +32,6 @@ if ('production' === process.env.ENV) {
 
 // For vendors for example jQuery, Lodash, angular2-jwt just import them anywhere in your app
 // Also see custom-typings.d.ts as you also need to do `typings install x` where `x` is your module
+
+//require('materialize-css');
+

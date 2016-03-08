@@ -34,6 +34,14 @@ module.exports = helpers.defaults({
     path: helpers.root('dist')
   },
 
+  resolve: {
+    alias: {
+      materializecss: 'materialize-css/dist/css/materialize.css',
+      materialize: 'materialize-css/dist/js/materialize.min.js',
+    },
+    extensions: ['', '.ts', '.js']
+  },
+
   module: {
     preLoaders: [
       // { test: /\.ts$/, loader: 'tslint-loader', exclude: [ helpers.root('node_modules') ] },
@@ -41,6 +49,10 @@ module.exports = helpers.defaults({
       { test: /\.js$/, loader: "source-map-loader", exclude: [ helpers.root('node_modules/rxjs') ] }
     ],
     loaders: [
+
+      { test: /materialize-css\/dist\/js\/materialize\.js/, loader: 'imports?materializecss' },
+
+      { test: /materialize\.css$/,   loader: 'style-loader!css-loader' },
       // Support for .ts files.
       { test: /\.ts$/, loader: 'ts-loader', exclude: [ /\.(spec|e2e)\.ts$/ ] },
 
@@ -51,7 +63,9 @@ module.exports = helpers.defaults({
       { test: /\.css$/,   loader: 'raw-loader' },
 
       // support for .html as raw text
-      { test: /\.html$/,  loader: 'raw-loader', exclude: [ helpers.root('src/index.html') ] }
+      { test: /\.html$/,  loader: 'raw-loader', exclude: [ helpers.root('src/index.html'), helpers.root('node_modules') ] },
+
+      { test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/, loader: 'url-loader?limit=100000' }
 
     ]
   },
@@ -70,6 +84,11 @@ module.exports = helpers.defaults({
         'NODE_ENV': JSON.stringify(metadata.ENV),
         'HMR': HMR
       }
+    }),
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery',
+      jquery: 'jquery'
     })
   ],
 

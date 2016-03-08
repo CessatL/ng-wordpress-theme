@@ -12,6 +12,6 @@ import { RouterActive } from './router-active';
 export class MenuCmp {
   constructor(elementRef: ElementRef) {
   }
-  ngAfterViewInit() {
+  ngOnInit() {
   }
 }

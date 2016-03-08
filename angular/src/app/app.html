@@ -1,31 +1,35 @@
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <span class="mdl-layout-title">Title</span>
-      <div class="mdl-layout-spacer"></div>
 
-        <main-menu></main-menu>
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                  mdl-textfield--floating-label mdl-textfield--align-right">
-        <label class="mdl-button mdl-js-button mdl-button--icon"
-               for="waterfall-exp">
-          <i class="material-icons">search</i>
-        </label>
-        <div class="mdl-textfield__expandable-holder">
-          <input class="mdl-textfield__input" type="text" name="sample"
-                 id="waterfall-exp">
-        </div>
-      </div>
-    </div>
-  </header>
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Title</span>
-
+<header>
+<nav>
+  <div class="nav-wrapper">
+    <a [routerLink]="[ '/Index' ]" class="brand-logo">Logo</a>
+    <a href="#!" data-activates="slideMenu" class="button-collapse"><i class="material-icons">menu</i></a>
+    <ul class="right hide-on-med-and-down">
       <main-menu></main-menu>
+    </ul>
+    <ul class="side-nav" id="slideMenu">
+      <main-menu></main-menu>
+    </ul>
   </div>
-  <main class="mdl-layout__content mdl-color--grey-300">
+</nav>
+</header>
+  <main>
     <router-outlet></router-outlet>
   </main>
+
+<a materialize="tooltip" class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!</a>
+
+<!-- Modal Trigger -->
+<a materialize="leanModal" [materializeParams]="[{dismissible: false}]" class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4>Modal Header</h4>
+    <p>A bunch of text</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+  </div>
 </div>
 
 
