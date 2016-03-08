@@ -12,7 +12,7 @@ import {AuthorCmp} from './shared/author/author';
 import {AuthorsCmp} from './shared/author/authors';
 
 //import {MaterializeDirective} from './shared/materialize/index';
-import {MaterializeDirective} from 'angular2-materialize';
+import {MaterializeDirective} from 'angular2-materialize'; 
 
 @Component({
   selector: 'app',
