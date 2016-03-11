@@ -1,35 +1,6 @@
-
-<header>
-<nav>
-  <div class="nav-wrapper">
-    <a [routerLink]="[ '/Index' ]" class="brand-logo">Logo</a>
-    <a href="#!" data-activates="slideMenu" class="button-collapse"><i class="material-icons">menu</i></a>
-    <ul class="right hide-on-med-and-down">
-      <main-menu></main-menu>
-    </ul>
-    <ul class="side-nav" id="slideMenu">
-      <main-menu></main-menu>
-    </ul>
-  </div>
-</nav>
-</header>
-  <main>
-    <router-outlet></router-outlet>
-  </main>
-
-<a materialize="tooltip" class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!</a>
-
-<!-- Modal Trigger -->
-<a materialize="leanModal" [materializeParams]="[{dismissible: false}]" class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-<!-- Modal Structure -->
-<div id="modal1" class="modal">
-  <div class="modal-content">
-    <h4>Modal Header</h4>
-    <p>A bunch of text</p>
-  </div>
-  <div class="modal-footer">
-    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-  </div>
-</div>
+<header></header>
+<main layout-padding layout="column" layout-fill>
+  <router-outlet></router-outlet>
+</main>
 
 

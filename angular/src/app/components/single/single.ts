@@ -14,11 +14,11 @@ export class SingleCmp {
 
   slug;
   type;
-  constructor(private service: SingleService, private _params: RouteParams) {
+  constructor(private wp: SingleService, private _params: RouteParams) {
     this.slug = _params.get('slug');
     this.type = _params.get('type');
   }
   ngOnInit() {
-    this.service.getPost(this.slug);
+    this.wp.getPost(this.slug);
   }
 }

@@ -1,5 +1,7 @@
 import { Injectable } from 'angular2/core';
 
+//var wp = require('./wp-api');
+
 export class Service{
 
   // our handler for wp-api client.
@@ -13,7 +15,7 @@ export class PostResponse{
   /*
    our PostResponse will already contain all post attributes,
    but we need to add extra attributes to the root to make it
-   easy to call from the Post template.
+   easy to call from the view.
    */
   featuredImage : string;
   postsCats: Array<any>;
@@ -79,6 +81,7 @@ export class SingleService extends Service{
     };
 
     this.service = new window['wp']['api']['collections']['Posts']();
+    //this.service = new wp.api.collections.Posts();
     this.service.fetch(postsQueryArgs).done((posts) => {
 
       // posts[0] holds the post we are looking for.
@@ -238,6 +241,29 @@ export class AuthorService extends Service{
 
 }
 
+/*================================
+          PAGE SERVICE
+ ================================*/
+export class PageService extends Service{
+
+  page;
+  constructor(){ super()}
+
+  getPage(slug){
+    //Initializing category query
+    var tagsQueryArgs = {
+      data: {
+        slug: slug
+      }
+    };
+    this.service = new window['wp']['api']['collections']['Pages']();
+    this.service.fetch(tagsQueryArgs).done((pages) => {
+      console.log(pages[0]);
+      this.page = pages[0];
+    });
+  }
+
+}
 
 //import { Http } from 'angular2/http';
 //import { Injectable } from 'angular2/core';

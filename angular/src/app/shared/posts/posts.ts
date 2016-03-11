@@ -1,13 +1,12 @@
 import { Input, Component } from 'angular2/core';
-import { PostCmp } from './../post/post';
+
 import { CollectionService } from '../../../assets/service-worker';
 
 @Component({
   selector: 'posts',
   viewProviders: [CollectionService],
   template: require('./posts.html'),
-  styles: [require('./posts.css')],
-  directives: [PostCmp]
+  styles: [require('./posts.css')]
 })
 export class PostsCmp {
 

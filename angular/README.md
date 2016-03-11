@@ -1,29 +1,43 @@
-### Components Upcoming Features:
+### Components Planned Features:
 
-##### Posts Collection Component:
+##### Collection Component:
 
-  perPage: 10 (default),
-  type: post (default),
-  featuredImage: [large, medium, small, off], medium (default)
-  showExcerpt: true (default),
-  showMore: [scroll, button, off], button (default),
-  showAuthor: true (default),
-  showDate: true (default)
+  Get wordpress collection object.
   
-  Example: `<posts [perPage]="" [type]="" [featuredImage]="medium" [showExcerpt]="true" [showMore]="true" ></posts>`
+  **Inputs**:
+  wp
+  args: array of query args
+  mode: {scroll, button, pagination}, button (default),
+  config: {
+    showFeaturedImage: { imageSize, false }: medium (default),
+    showExcerpt: true (default),
+    showAuthor: true (default),
+    showDate: true (default),
+    showCats: true (default),
+    showTags: false (default)  
+  {
+  
+  **Usage**:
+  `<collection [wp]="posts" [args]="{perPage: 6, page: 1}" [showFeaturedImage]="medium" [showExcerpt]="true" [mode]="scroll" ></posts>`
   
 
   
-##### Category Collection Component
+##### Single Component
 
-  perPage: 10 (default),
-  showMore: [scroll, button, off], button (default),
-`<cats [perPage]="" [showMore]="true" ></cats>` : a collection of categories
+  Get a single wordpress object.
+  
+  **Input**:
+  wp,
+  args: array of query args,
+  config: {
+    showFeaturedImage: { imageSize, false }: medium (default),
+    showExcerpt: true (default),
+    showAuthor: true (default),
+    showDate: true (default),
+    showCats: true (default),
+    showTags: false (default)
+  }
+  
+  **Usage**:
+ `<single [wp]="author" [args]="{slug: harry-potter}" [config]="{ ... }"  ></single>`
 
-##### Tags Collection arguments
-
-`<tags [perPage]="" [showMore]="true" ></tags>` : a collection of tags
-
-##### Author Collection Component
-
-`<tags [perPage]="" [showMore]="true" ></tags>` : a collection of authors

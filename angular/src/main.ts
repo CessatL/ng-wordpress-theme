@@ -6,8 +6,6 @@ import * as browser from 'angular2/platform/browser';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
-import 'jquery';
-import 'angular2-materialize';
 /*
  * App Environment Providers
  * providers that only live in certain environment
@@ -26,6 +24,7 @@ if ('production' === process.env.ENV) {
  * our top level component that holds all of our components
  */
 import {App} from './app/app';
+import { WORDPRESS_DIRECTIVES, WORDPRESS_PROVIDERS} from './app/shared/all';
 
 /*
  * Bootstrap our Angular app with a top level component `App` and inject
@@ -36,7 +35,8 @@ export function main() {
       ...ENV_PROVIDERS,
       ...HTTP_PROVIDERS,
       ...ROUTER_PROVIDERS,
-      ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy })
+      ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy }),
+      ngCore.provide(ngCore.PLATFORM_DIRECTIVES, {useValue: WORDPRESS_DIRECTIVES, multi: true})
     ])
     .catch(err => console.error(err));
 }
