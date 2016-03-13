@@ -30,7 +30,9 @@ function wpb_adding_scripts() {
   //  wp_enqueue_script( 'wp-api' );
     wp_register_script('polyfills', get_template_directory_uri() . '/angular/dist/polyfills.bundle.js', array(), false, true);
     wp_enqueue_script('polyfills');
-    wp_register_script('main', get_template_directory_uri() . '/angular/dist/main.bundle.js', array('wp-api'), false, true);
+    wp_register_script('vendor', get_template_directory_uri() . '/angular/dist/vendor.bundle.js', array(), false, true);
+    wp_enqueue_script('vendor');
+    wp_register_script('main', get_template_directory_uri() . '/angular/dist/app.bundle.js', array('vendor','wp-api'), false, true);
     wp_enqueue_script('main');
     
     Initialize_Mainmenu();

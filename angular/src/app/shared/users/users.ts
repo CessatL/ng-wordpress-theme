@@ -1,16 +1,16 @@
 import {Component} from 'angular2/core';
 import { RouterLink} from 'angular2/router';
-import {AuthorsService} from '../../../assets/service-worker';
+import {CollectionService,CollectionType} from '../../../assets/service-worker';
 
 
 @Component({
-  selector: 'author',
-  viewProviders: [AuthorsService],
+  selector: 'users',
+  viewProviders: [CollectionService],
   template: `
-    <ul class="authors-list-item mdl-list">
-      <li *ngFor="#author of wp.authors" class="mdl-list__item">
-        <a [routerLink]="['Author', { slug: author.slug }]" class="mdl-list__item-primary-content">
-          {{author.name}}
+    <ul class="users-list-item mdl-list">
+      <li *ngFor="#user of wp.results" class="mdl-list__item">
+        <a [routerLink]="['User', { slug: user.slug }]" class="mdl-list__item-primary-content">
+          {{user.name}}
         </a>
       </li>
     </ul>
@@ -26,14 +26,15 @@ import {AuthorsService} from '../../../assets/service-worker';
   directives: [RouterLink]
 })
 
-export class AuthorsCmp {
+export class UsersCmp {
 
-  constructor(private wp: AuthorsService) {;
+  constructor(private wp: CollectionService) {
   }
   ngOnInit(){
-    this.wp.fetchAuthor();
+    this.wp.Initialize(CollectionType.Users);
+    this.wp.fetch();
   }
-  loadMore(){
-    this.wp.fetchMore();
+  loadMore() {
+    this.wp.more();
   }
 }

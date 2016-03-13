@@ -1,5 +1,5 @@
 <ul class="cats-list-item mdl-list">
-  <li *ngFor="#cat of wp.cats" class="mdl-list__item">
+  <li *ngFor="#cat of wp.results" class="mdl-list__item">
     <a [routerLink]="['Category', { slug: cat.slug }]" class="mdl-list__item-primary-content">
       <span class="mdl-badge" [attr.data-badge]="cat.count">{{cat.name}}</span>
     </a>

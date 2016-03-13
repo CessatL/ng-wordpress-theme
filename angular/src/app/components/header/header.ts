@@ -2,14 +2,14 @@ import { Component } from 'angular2/core';
 import { RouterLink } from 'angular2/router';
 import { RouterActive } from './router-active';
 
-import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS, Media, SidenavService} from 'ng2-material/source/all';
+import {Media, SidenavService} from 'ng2-material/source/all';
 
 @Component({
   selector: 'header',
-  viewProviders: [MATERIAL_PROVIDERS],
+  viewProviders: [SidenavService],
   template: require('./header.html'),
   styles: [require('./header.css')],
-  directives: [RouterLink, RouterActive, MATERIAL_DIRECTIVES]
+  directives: [RouterLink, RouterActive]
 })
 
 export class HeaderCmp {

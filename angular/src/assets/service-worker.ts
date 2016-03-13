@@ -1,269 +1,141 @@
 import { Injectable } from 'angular2/core';
 
-//var wp = require('./wp-api');
-
-export class Service{
-
+export class WPService{
   // our handler for wp-api client.
+  results;
   service;
+  embed = false;
 
   constructor(){
   }
+  Initialize(collectionType: CollectionType){
+    //Initialize the service
+    if(collectionType == CollectionType.Posts)
+      this.service = new window['wp']['api']['collections']['Posts']();
+    else if(collectionType == CollectionType.Categories)
+      this.service = new window['wp']['api']['collections']['Categories']();
+    else if(collectionType == CollectionType.Tags)
+      this.service = new window['wp']['api']['collections']['Tags']();
+    else if(collectionType == CollectionType.Users)
+      this.service = new window['wp']['api']['collections']['Users']();
+    else if(collectionType == CollectionType.Pages)
+      this.service = new window['wp']['api']['collections']['Pages']();
+    else
+      console.log("CollectionService: wrong collection type");
+  }
+}
+
+@Injectable()
+export class CollectionService extends WPService{
+
+  constructor(){ super()}
+
+  Initialize(collectionType: CollectionType) {
+    super.Initialize(collectionType);
+  }
+
+  fetch(args?){
+    //Initializing collection query
+    if(args)
+      this.embed = args._embed;
+    var queryArgs = {
+      data: args
+    };
+    if(this.service){
+      //check if the service has been initialized, fetch the data
+      this.service.fetch(queryArgs).done((response) => {
+        this.results = this.embed ? PostsCollection(response) : response;
+      });
+    }
+    else{
+      console.log("WPService: you forgot to call Initialize() first.")
+    }
+  }
+
+  more() {
+    this.service.more().done((response) => {
+      this.results = this.results.concat(this.embed ? PostsCollection(response) : response);
+    });
+  }
+}
+
+@Injectable()
+export class SingleService extends WPService{
+
+  constructor(){ super() }
+
+  Initialize(collectionType: CollectionType) {
+    super.Initialize(collectionType);
+  }
+  fetch(args?){
+    //Initializing collection query
+    if(args)
+      this.embed = args._embed;
+    var queryArgs = {
+      data: args
+    };
+
+    if(this.service) {
+      //check if the service has been initialized, fetch the data
+
+      this.service.fetch(queryArgs).done((response) => {
+        this.results = this.embed ? SinglePost(response[0]): response[0];
+      });
+    }
+    else{
+      console.log("WPService: you forgot to call Initialize() first.")
+    }
+  }
+}
+
+export enum CollectionType{
+  Posts,
+  Categories,
+  Tags,
+  Users,
+  Pages
+}
+
+export function PostsCollection(posts) {
+  var results: Array<PostResponse> = [];
+  for (var post of posts) {
+    results.push(SinglePost(post));
+  }
+  return results;
+}
+export function SinglePost(post){
+  /* due to the weird attributes names provided by the official wp rest api v2.
+   post._embedded['https://api.w.org/term'][0] : represents the categories of the posts.
+   post._embedded['https://api.w.org/term'][1] : represents the tags of the posts.
+   post._embedded['https://api.w.org/featuredmedia'][0] : represents the featured image.*/
+
+  var postResponse:PostResponse;
+  postResponse = post;
+  postResponse.categories = post._embedded['https://api.w.org/term'][0];
+  postResponse.tags = post._embedded['https://api.w.org/term'][1];
+
+  /* check if the post has featured image && check if it has a medium size */
+  if (post._embedded.hasOwnProperty('https://api.w.org/featuredmedia')
+    && post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.hasOwnProperty('medium')) {
+
+    postResponse.featuredImage = post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.medium.source_url;
+  }
+
+  return postResponse;
 }
 
 export class PostResponse{
   /*
-   our PostResponse will already contain all post attributes,
-   but we need to add extra attributes to the root to make it
-   easy to call from the view.
+   PostResponse will hold all post attributes,
+   only used for embedded posts.
    */
   featuredImage : string;
-  postsCats: Array<any>;
-  postsTags: Array<any>;
+  categories: Array<any>;
+  tags: Array<any>;
   constructor() { }
 }
 
-/*================================
-   COLLECTION OF POSTS SERVICE
- ================================*/
-@Injectable()
-export class CollectionService extends Service{
 
-  posts:Array<PostResponse> = [];
-
-  constructor(){ super() }
-
-  fetchPosts(perPage:number, page:number, type:string) {
-
-    //Initializing posts query
-    var postsQueryArgs = {
-      data: {
-        //search:
-        _embed: true,
-        page: page,
-        per_page: perPage
-      }
-    };
-
-    this.service = new window['wp']['api']['collections']['Posts']();
-    this.service.fetch(postsQueryArgs).done((posts) => {
-      this.posts = InitializePosts(posts);
-    });
-  }
-
-  fetchMore() {
-    this.service.more().done((posts) => {
-      this.posts = this.posts.concat(InitializePosts(posts));
-    });
-  }
-
-}
-/*================================
-        SINGLE POST SERVICE
- ================================*/
-@Injectable()
-export class SingleService extends Service{
-
-  post: PostResponse;
-
-  constructor(){ super() }
-
-  getPost(slug: string){
-
-    //Initializing post query
-    var postsQueryArgs = {
-      data: {
-        _embed: true,
-        filter: {
-          name: slug
-        }
-      }
-    };
-
-    this.service = new window['wp']['api']['collections']['Posts']();
-    //this.service = new wp.api.collections.Posts();
-    this.service.fetch(postsQueryArgs).done((posts) => {
-
-      // posts[0] holds the post we are looking for.
-      this.post = InitializePosts(posts)[0];
-    });
-  }
-}
-
-function InitializePosts(posts) {
-  var results: Array<PostResponse> = [];
-  for (var post of posts) {
-    /* due to the weird attributes names provided by the official wp rest api v2.
-     post._embedded['https://api.w.org/term'][0] : represents the categories of the posts.
-     post._embedded['https://api.w.org/term'][1] : represents the tags of the posts.
-     post._embedded['https://api.w.org/featuredmedia'][0] : represents the featured image.*/
-
-    var postResponse:PostResponse;
-    postResponse = post;
-    postResponse.postsCats = post._embedded['https://api.w.org/term'][0];
-    postResponse.postsTags = post._embedded['https://api.w.org/term'][1];
-
-    /* check if the post has featured image && check if it has a medium size */
-    if (post._embedded.hasOwnProperty('https://api.w.org/featuredmedia')
-      && post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.hasOwnProperty('medium')) {
-
-      postResponse.featuredImage = post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.medium.source_url;
-    }
-    else
-      postResponse.featuredImage = "";
-
-    results.push(postResponse);
-  }
-  return results;
-}
-
-/*==============================
- COLLECTION OF CATEGORIES SERVICE
- ==============================*/
-export class CatsService extends Service{
-
-  cats;
-  constructor(){ super()}
-
-  fetchCats() {
-
-    this.service = new window['wp']['api']['collections']['Categories']();
-
-    this.service.fetch().done((cats) => {
-      this.cats = cats;
-    });
-
-  }
-  fetchMore() {
-    this.service.more().done((cats) => {
-      this.cats = this.cats.concat(cats);
-    });
-  }
-}
-
-/*================================
-     SINGLE CATEGORY SERVICE
- ================================*/
-export class CatService extends Service{
-
-  cat;
-
-  constructor(){ super()}
-
-  fetchCat(slug: string) {
-    //Initializing category query
-    var tagsQueryArgs = {
-      data: {
-        slug: slug
-      }
-    };
-    this.service = new window['wp']['api']['collections']['Categories']();
-    this.service.fetch(tagsQueryArgs).done((cats) => {
-      this.cat = cats[0];
-    });
-  }
-}
-/*================================
-    COLLECTION OF TAGS SERVICE
- ================================*/
-export class TagService extends Service{
-
-  tags;
-  constructor(){ super()}
-
-  fetchTags(){
-    this.service = new window['wp']['api']['collections']['Tags']();
-    this.service.fetch().done((tags) => {
-      this.tags = tags;
-    });
-  }
-
-  fetchMore(){
-    this.service.more()
-  }
-
-}
-/*================================
-   COLLECTION OF AUTHORS SERVICE
- ================================*/
-export class AuthorsService extends Service{
-
-  authors;
-  constructor(){ super()}
-
-  fetchAuthor(){
-    //Initializing category query
-    var tagsQueryArgs = {
-      data: {
-      //  slug: slug
-      }
-    };
-    this.service = new window['wp']['api']['collections']['Users']();
-    this.service.fetch(tagsQueryArgs).done((authors) => {
-      console.log(authors);
-      this.authors = authors;
-    });
-  }
-
-  fetchMore(){
-    this.service.more().done((authors) => {
-      this.authors = this.authors.concat(authors);
-    });
-  }
-
-}
-/*================================
-       SINGLE AUTHOR SERVICE
- ================================*/
-
-export class AuthorService extends Service{
-
-  author;
-  constructor(){ super()}
-
-  fetchAuthor(slug){
-    //Initializing category query
-    var tagsQueryArgs = {
-      data: {
-        slug: slug
-      }
-    };
-    this.service = new window['wp']['api']['collections']['Users']();
-    this.service.fetch(tagsQueryArgs).done((authors) => {
-      console.log(authors);
-      this.author = authors[0];
-    });
-  }
-
-  fetchMore(){
-    this.service.more()
-  }
-
-}
-
-/*================================
-          PAGE SERVICE
- ================================*/
-export class PageService extends Service{
-
-  page;
-  constructor(){ super()}
-
-  getPage(slug){
-    //Initializing category query
-    var tagsQueryArgs = {
-      data: {
-        slug: slug
-      }
-    };
-    this.service = new window['wp']['api']['collections']['Pages']();
-    this.service.fetch(tagsQueryArgs).done((pages) => {
-      console.log(pages[0]);
-      this.page = pages[0];
-    });
-  }
-
-}
 
 //import { Http } from 'angular2/http';
 //import { Injectable } from 'angular2/core';

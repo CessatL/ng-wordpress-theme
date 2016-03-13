@@ -1,30 +1,61 @@
 /*
  * Providers provided by Angular
  */
-import * as ngCore from 'angular2/core';
 import * as browser from 'angular2/platform/browser';
-import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
+import * as ngCore from 'angular2/core';
+import {
+  ROUTER_PROVIDERS,
+  ROUTER_DIRECTIVES,
+  LocationStrategy,
+  HashLocationStrategy
+} from 'angular2/router';
+import {FORM_PROVIDERS} from 'angular2/common';
 import {HTTP_PROVIDERS} from 'angular2/http';
-
-/*
- * App Environment Providers
- * providers that only live in certain environment
- */
-const ENV_PROVIDERS = [];
-
-if ('production' === process.env.ENV) {
-  ngCore.enableProdMode();
-  ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS_PROD_MODE);
-} else {
-  ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS);
-}
 
 /*
  * App Component
  * our top level component that holds all of our components
  */
 import {App} from './app/app';
-import { WORDPRESS_DIRECTIVES, WORDPRESS_PROVIDERS} from './app/shared/all';
+import {WORDPRESS_DIRECTIVES, WORDPRESS_PROVIDERS} from './app/shared/all';
+import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from 'ng2-material/source/all';
+
+/*
+ * Application Providers/Directives/Pipes
+ * providers/directives/pipes that only live in our browser environment
+ */
+// application_providers: providers that are global through out the application
+const APPLICATION_PROVIDERS = [
+  ...HTTP_PROVIDERS,
+  ...ROUTER_PROVIDERS,
+  ...FORM_PROVIDERS,
+  MATERIAL_PROVIDERS,
+  WORDPRESS_PROVIDERS,
+  ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy })
+];
+
+// application_directives: directives that are global through out the application
+const APPLICATION_DIRECTIVES = [
+  ...ROUTER_DIRECTIVES,
+  MATERIAL_DIRECTIVES,
+  WORDPRESS_DIRECTIVES
+];
+
+// application_pipes: pipes that are global through out the application
+const APPLICATION_PIPES = [
+
+];
+
+// Environment
+if ('production' === ENV) {
+  // Production
+  ngCore.enableProdMode();
+  APPLICATION_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS_PROD_MODE);
+} else {
+  // Development
+  APPLICATION_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS);
+}
+
 
 /*
  * Bootstrap our Angular app with a top level component `App` and inject
@@ -32,11 +63,9 @@ import { WORDPRESS_DIRECTIVES, WORDPRESS_PROVIDERS} from './app/shared/all';
  */
 export function main() {
   return browser.bootstrap(App, [
-      ...ENV_PROVIDERS,
-      ...HTTP_PROVIDERS,
-      ...ROUTER_PROVIDERS,
-      ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy }),
-      ngCore.provide(ngCore.PLATFORM_DIRECTIVES, {useValue: WORDPRESS_DIRECTIVES, multi: true})
+      ...APPLICATION_PROVIDERS,
+      ngCore.provide(ngCore.PLATFORM_DIRECTIVES, {useValue: APPLICATION_DIRECTIVES, multi: true}),
+      ngCore.provide(ngCore.PLATFORM_PIPES, {useValue: APPLICATION_PIPES, multi: true})
     ])
     .catch(err => console.error(err));
 }
@@ -45,6 +74,7 @@ export function main() {
 /*
  * Vendors
  * For vendors for example jQuery, Lodash, angular2-jwt just import them anywhere in your app
+ * You can also import them in vendors to ensure that they are bundled in one file
  * Also see custom-typings.d.ts as you also need to do `typings install x` where `x` is your module
  */
 
@@ -59,9 +89,9 @@ function bootstrapDomReady() {
   return document.addEventListener('DOMContentLoaded', main);
 }
 
-if ('development' === process.env.ENV) {
+if ('development' === ENV) {
   // activate hot module reload
-  if (process.env.HMR) {
+  if (HMR) {
     if (document.readyState === 'complete') {
       main();
     } else {

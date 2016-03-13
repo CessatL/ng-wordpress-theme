@@ -3,7 +3,7 @@
 #### Technical:
 
 ### Core Components
-  1. service-worker: reimplement the service to collection and model classes and unite them  
+  1. ~~service-worker~~: reimplement the service to collection and model classes and unite them  
   2. ~~dynamic component~~. display components from dynamic content.
   3. ~~menu component~~. display main-menu from wordpress menu using localize__script.
   4. 404 component. Page Not Found.
@@ -33,6 +33,10 @@
   1. ~~share component
   2. native comments component
   3. ~~disqus component
+  4. slider component
+  5. carousel component
+  6. archive page component
+  7. layout components.
   
 
 #### Design:

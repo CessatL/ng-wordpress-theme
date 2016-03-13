@@ -1,6 +1,5 @@
 import { Input, Component } from 'angular2/core';
-
-import { CollectionService } from '../../../assets/service-worker';
+import { CollectionService, CollectionType } from '../../../assets/service-worker';
 
 @Component({
   selector: 'posts',
@@ -10,16 +9,15 @@ import { CollectionService } from '../../../assets/service-worker';
 })
 export class PostsCmp {
 
-  @Input() perPage:number;
-  @Input() page:number;
-  @Input() type:string;
+  @Input() args;
 
   constructor(private wp: CollectionService) {
   }
   ngOnInit(){
-    this.wp.fetchPosts(this.perPage, this.page, this.type);
+    this.wp.Initialize(CollectionType.Posts);
+    this.wp.fetch(this.args);
   }
   loadMore() {
-    this.wp.fetchMore();
+    this.wp.more();
   }
 }

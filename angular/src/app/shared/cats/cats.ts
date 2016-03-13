@@ -1,23 +1,23 @@
 import { Component } from 'angular2/core';
-import { CatsService } from '../../../assets/service-worker';
+import { CollectionService, CollectionType } from '../../../assets/service-worker';
 import { RouterLink } from 'angular2/router';
 
 @Component({
   selector: 'categories',
-  viewProviders: [CatsService],
+  viewProviders: [CollectionService],
   template: require('./cats.html'),
   directives: [RouterLink]
 })
 export class CatsCmp {
 
-  constructor(private wp: CatsService) {
+  constructor(private wp: CollectionService) {
   }
   ngOnInit(){
-    this.wp.fetchCats();
+    this.wp.Initialize(CollectionType.Categories);
+    this.wp.fetch({ filter : { orderby: 'title', order: 'ASC' }});
   }
   loadMore() {
-    this.wp.fetchMore();
-
+    this.wp.more();
   }
 }
 

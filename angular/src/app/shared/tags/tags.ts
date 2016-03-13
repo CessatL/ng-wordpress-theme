@@ -1,12 +1,12 @@
 import { Component } from 'angular2/core';
-import { TagService } from '../../../assets/service-worker';
+import { CollectionService, CollectionType } from '../../../assets/service-worker';
 
 @Component({
-  selector: 'category',
-  viewProviders: [TagService],
+  selector: 'tags',
+  viewProviders: [CollectionService],
   template: `
     <div class="tags">
-      <span class="tag-item" *ngFor="#tag of wp.tags">
+      <span class="tag-item" *ngFor="#tag of wp.results">
         {{tag.name}}
       </span>
     </div>
@@ -15,9 +15,10 @@ import { TagService } from '../../../assets/service-worker';
 
 export class TagsCmp {
 
-  constructor(private wp: TagService) {
+  constructor(private wp: CollectionService) {
   }
   ngOnInit(){
-    this.wp.fetchTags();
+    this.wp.Initialize(CollectionType.Tags);
+    this.wp.fetch();
   }
 }

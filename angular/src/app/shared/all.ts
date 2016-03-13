@@ -13,10 +13,10 @@ export * from './cats/cats';
 import { TagsCmp } from './tags/tags';
 export * from './tags/tags';
 
-import { AuthorCmp } from './author/author';
-import { AuthorsCmp } from './author/authors';
-export * from './author/authors';
-export * from './author/author';
+import { UserCmp } from './users/user';
+import { UsersCmp } from './users/users';
+export * from './users/users';
+export * from './users/user';
 
 
 import { SingleService, CollectionService } from './../../assets/service-worker';
@@ -31,8 +31,8 @@ export const WORDPRESS_DIRECTIVES: Type[] = CONST_EXPR([
   CatsCmp,
   CatCmp,
   TagsCmp,
-  AuthorCmp,
-  AuthorsCmp
+  UserCmp,
+  UsersCmp
 ]);
 
 /**

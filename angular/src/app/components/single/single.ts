@@ -1,7 +1,7 @@
 import {Component} from 'angular2/core';
 import {RouteParams} from 'angular2/router';
 import {PostCmp} from '../../shared/post/post';
-import {SingleService} from '../../../assets/service-worker';
+import {SingleService,CollectionType} from '../../../assets/service-worker';
 
 @Component({
   selector: 'single',
@@ -19,6 +19,7 @@ export class SingleCmp {
     this.type = _params.get('type');
   }
   ngOnInit() {
-    this.wp.getPost(this.slug);
+    this.wp.Initialize(CollectionType.Posts);
+    this.wp.fetch({ _embed: true, perPage: 1, filter: { name: this.slug }});
   }
 }
