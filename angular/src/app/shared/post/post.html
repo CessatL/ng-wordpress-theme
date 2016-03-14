@@ -1,6 +1,6 @@
 
 <md-card>
-  <img *ngIf="post.featuredImage" [src]="post.featuredImage" class="md-card-image">
+  <img *ngIf="post.featured_media != 0" [src]="post.featuredImage.sizes[featuredImageSize].source_url" class="md-card-image">
   <md-card-title>
     <md-card-title-text>
       <span class="md-headline">{{post.title.rendered}}</span>

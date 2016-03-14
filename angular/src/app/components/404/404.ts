@@ -1,8 +1,11 @@
 import { Component } from 'angular2/core';
 
 @Component({
-	selector: '404',
-    //styles: [require('./blog.scss')],
-	template: require('./404.html')
+	selector: 'NotFound',
+	template: `
+	  404 Page Not Found.
+	`
 })
-export class NotFoundCmp {}
+export class NotFoundCmp {
+  constructor(){}
+}

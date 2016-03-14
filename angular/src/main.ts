@@ -31,7 +31,7 @@ const APPLICATION_PROVIDERS = [
   ...FORM_PROVIDERS,
   MATERIAL_PROVIDERS,
   WORDPRESS_PROVIDERS,
-  ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy })
+  //ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy })
 ];
 
 // application_directives: directives that are global through out the application

@@ -22,12 +22,11 @@ import {UserCmp} from './shared/users/user';
   { path: '/', component: HomeCmp, name: 'Index' },
   // Async load a component using Webpack's require with es6-promise-loader
   { path: '/page/:slug', component: PageCmp, name: 'Page' },
-  { path: '/blog/:slug', component: SingleCmp, as: 'Single' },
-  { path: '/category/:slug', component: CatCmp, as: 'Category' },
-  { path: '/user/:slug', component: UserCmp, as: 'User' },
+  { path: '/blog/:slug', component: SingleCmp, name: 'Single' },
+  { path: '/category/:slug', component: CatCmp, name: 'Category' },
+  { path: '/user/:slug', component: UserCmp, name: 'User' },
  // { path: '/blog', loader: () => require('./components/blog/blog')('BlogCmp'), name: 'Blog' },
-  { path: '/**', component: NotFoundCmp, name: '404' },
-
+  { path: '/**', component: NotFoundCmp, name: 'NotFound' }
 ])
 export class App {
   //use window['template_directory'] for path to your wp theme
