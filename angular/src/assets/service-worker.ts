@@ -1,27 +1,25 @@
 import { Injectable } from 'angular2/core';
 
 export class WPService{
-  // our handler for wp-api client.
-  results;
-  service;
-  embed = false;
 
+  results;        //our collection response. (bound directly to the view)
+  service;        //our service handler. (bound directly to the view)
+  embed = false;
+  /*
+  embed indicates that the requested collection must be embedded,
+  this is useful for getting a collection of posts/single post, if embed is true,
+  each post has to be initialized by the SinglePost class where post's featuredImage,
+  tags and categories will become accessible in our Components view.
+   */
   constructor(){
+    if(!window['wp']){
+      console.log('WPService: cannot find wp-api script.')
+    }
   }
+
   Initialize(collectionType: CollectionType){
-    //Initialize the service
-    if(collectionType == CollectionType.Posts)
-      this.service = new window['wp']['api']['collections']['Posts']();
-    else if(collectionType == CollectionType.Categories)
-      this.service = new window['wp']['api']['collections']['Categories']();
-    else if(collectionType == CollectionType.Tags)
-      this.service = new window['wp']['api']['collections']['Tags']();
-    else if(collectionType == CollectionType.Users)
-      this.service = new window['wp']['api']['collections']['Users']();
-    else if(collectionType == CollectionType.Pages)
-      this.service = new window['wp']['api']['collections']['Pages']();
-    else
-      console.log("CollectionService: wrong collection type");
+    //Initialize() must be called before request function to identify what we want to get.
+    this.service = new window['wp']['api']['collections'][collectionType];
   }
 }
 
@@ -36,23 +34,26 @@ export class CollectionService extends WPService{
 
   fetch(args?){
     //Initializing collection query
-    if(args)
+    if(args) {
+      //set embed from input args.
       this.embed = args._embed;
+    }
     var queryArgs = {
       data: args
     };
-    if(this.service){
-      //check if the service has been initialized, fetch the data
-      this.service.fetch(queryArgs).done((response) => {
-        this.results = this.embed ? PostsCollection(response) : response;
-      });
+
+    //check if the service has been initialized, fetch the data
+    if(!this.service){
+      console.log("WPService: you forgot to call Initialize() first.");
+      return;
     }
-    else{
-      console.log("WPService: you forgot to call Initialize() first.")
-    }
+    this.service.fetch(queryArgs).done((response) => {
+      this.results = this.embed ? PostsCollection(response) : response;
+    });
   }
 
   more() {
+    //get more posts (next page)
     this.service.more().done((response) => {
       this.results = this.results.concat(this.embed ? PostsCollection(response) : response);
     });
@@ -69,34 +70,42 @@ export class SingleService extends WPService{
   }
   fetch(args?){
     //Initializing collection query
-    if(args)
+    if(args){
+      //set embed from user args.
       this.embed = args._embed;
+    }
     var queryArgs = {
       data: args
     };
 
-    if(this.service) {
+    if(!this.service) {
       //check if the service has been initialized, fetch the data
-
-      this.service.fetch(queryArgs).done((response) => {
-        this.results = this.embed ? SinglePost(response[0]): response[0];
-      });
+      console.log("WPService: Service must be initialized first.")
+      return;
     }
-    else{
-      console.log("WPService: you forgot to call Initialize() first.")
-    }
+    this.service.fetch(queryArgs).done((response) => {
+      this.results = this.embed ? SinglePost(response[0]): response[0];
+    });
   }
 }
 
 export enum CollectionType{
-  Posts,
-  Categories,
-  Tags,
-  Users,
-  Pages
+  /*
+  typescript 1.8 doesn't allow to use strings values in enums
+  but here is a nice hack =)
+   */
+  Posts = <any>'Posts',
+  Categories = <any>'Categories',
+  Tags = <any>'Tags',
+  Users = <any>'Users',
+  Pages = <any>'Pages'
 }
 
 export function PostsCollection(posts) {
+  /*
+  this function is only called when embed is true,
+  it simply returns an array of SinglePost class
+   */
   var results: Array<PostResponse> = [];
   for (var post of posts) {
     results.push(SinglePost(post));
@@ -104,10 +113,11 @@ export function PostsCollection(posts) {
   return results;
 }
 export function SinglePost(post){
-  /* due to the weird attributes names provided by the official wp rest api v2.
-   post._embedded['https://api.w.org/term'][0] : represents the categories of the posts.
-   post._embedded['https://api.w.org/term'][1] : represents the tags of the posts.
-   post._embedded['https://api.w.org/featuredmedia'][0] : represents the featured image.*/
+  /* due to the weird attributes names provided by wp rest api v2,
+   we need to make a post class to copies the following attributes in to the root class
+   post._embedded['https://api.w.org/term'][0] : represents single post's categories.
+   post._embedded['https://api.w.org/term'][1] : represents single post's tags.
+   post._embedded['https://api.w.org/featuredmedia'][0] : represents single post's featured image.*/
 
   var postResponse:PostResponse;
   postResponse = post;
@@ -115,10 +125,8 @@ export function SinglePost(post){
   postResponse.tags = post._embedded['https://api.w.org/term'][1];
 
   /* check if the post has featured image && check if it has a medium size */
-  if (post._embedded.hasOwnProperty('https://api.w.org/featuredmedia')
-    && post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.hasOwnProperty('medium')) {
-
-    postResponse.featuredImage = post._embedded['https://api.w.org/featuredmedia'][0].media_details.sizes.medium.source_url;
+  if(post.featured_media != 0){
+    postResponse.featuredImage = post._embedded['https://api.w.org/featuredmedia'][0].media_details;
   }
 
   return postResponse;
@@ -129,7 +137,7 @@ export class PostResponse{
    PostResponse will hold all post attributes,
    only used for embedded posts.
    */
-  featuredImage : string;
+  featuredImage: any;
   categories: Array<any>;
   tags: Array<any>;
   constructor() { }
