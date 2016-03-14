@@ -28,10 +28,6 @@ export class CollectionService extends WPService{
 
   constructor(){ super()}
 
-  Initialize(collectionType: CollectionType) {
-    super.Initialize(collectionType);
-  }
-
   fetch(args?){
     //Initializing collection query
     if(args) {
@@ -65,9 +61,6 @@ export class SingleService extends WPService{
 
   constructor(){ super() }
 
-  Initialize(collectionType: CollectionType) {
-    super.Initialize(collectionType);
-  }
   fetch(args?){
     //Initializing collection query
     if(args){
