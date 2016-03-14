@@ -30,9 +30,9 @@ npm install
 # install typings for the app
 typings install
 
-#build the app
+# build the app
 npm build:dev
 
-#go to your browser and enter your wordpress server address
+# Go to your browser and enter your wordpress server address
 ```
 
