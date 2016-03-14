@@ -8,11 +8,31 @@ No Live Demo, the theme is still in the early development stages.
   - Local Wordpress server ready.
   - WP REST API v2 plugin activated. 
   
-#### Setting up the theme
 
-1. Copy and paste these files inside wordpress theme folder.
+#### Quick Start
 
-2. Navigate in angular folder, and execute `npm install`.
+```
+# go to your wordpress theme directory, clone this repo
+cd path-to-your-wordpress-theme-directory
 
-3. Activate the theme from wordpress dashboard, then you are good to go.
+# clone the repo
+git clone https://github.com/MurhafSousli/ng2-wordpress-theme.git
+
+# go inside angular directory
+cd angular
+
+# add required global libraries
+npm install typings webpack-dev-server -g
+
+# install the repo with npm
+npm install
+
+# install typings for the app
+typings install
+
+#build the app
+npm build:dev
+
+#go to your browser and enter your wordpress server address
+```
 
