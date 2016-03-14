@@ -6,14 +6,14 @@
   1. ~~service-worker~~: reimplement the service to collection and model classes and unite them  
   2. ~~dynamic component~~. display components from dynamic content.
   3. ~~menu component~~. display main-menu from wordpress menu using localize__script.
-  4. 404 component. Page Not Found.
+  4. ~~404 component~~. Page Not Found. / handle single 
   5. ~~header component~~. our app header holding main-menu, search, sidenav.
   
 ### Routing Components
-  1. ~~Page Component
-  2. ~~Single Post Component
-  3. ~~Single Author Component
-  4. ~~Single Category Component
+  1. ~~Page Component~~
+  2. ~~Single Post Component~~
+  3. ~~Single Author Component~~
+  4. ~~Single Category Component~~
   
 ### Collection Components
   1. ~~posts collection component~~ collection of posts 
@@ -30,9 +30,9 @@
   4. ~~page component~~. single page
 
 ### Plugins Components
-  1. ~~share component
+  1. ~~share component~~
   2. native comments component
-  3. ~~disqus component
+  3. ~~disqus component~~
   4. slider component
   5. carousel component
   6. archive page component
