@@ -1,7 +1,7 @@
 # ng2-wordpress-theme
-angular2 + wordpress starter theme
+Angular2 + Wordpress starter theme
 
-No Live Demo, the theme is still in the early development stages.
+Currently there is no live demo, the theme is still in the early stages.
 
 #### Requirement:
 
