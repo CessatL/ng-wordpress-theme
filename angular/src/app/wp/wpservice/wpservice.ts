@@ -1,140 +1,140 @@
-import { Injectable } from 'angular2/core';
- 
-@Injectable()
-export class CollectionService{
-  service;     //our service handler. (bound directly to the view)
-
-  constructor(){ }
-
-  fetch(collectionType: CollectionType, args?){
-    if(!this.service) {
-      this.service = new window['wp']['api']['collections'][collectionType]();
-    }
-    var queryArgs = {};
-    // set queryArgs
-    if(args){
-      queryArgs = {
-        data: args
-      };
-    }
-    return this.service.fetch(queryArgs);
-  }
-
-  more() {
-    //check if the service has been initialized, fetch the data
-    if(!this.service){
-      console.log("WPService: you forgot to call Initialize() first.");
-      return;
-    }
-    //get more posts (next page)
-    return this.service.more();
-  }
-}
-
-@Injectable()
-export class ModelService{
-  service;
-
-  constructor(){ }
-
-  fetch(Id , modelType: ModelType){
-
-    if(!this.service){
-      this.service = new window['wp']['api']['models'][modelType]({ id: Id});
-    }
-    return this.service.fetch();
-  }
-}
-
-export enum CollectionType{
-  /*
-  * typescript 1.8 doesn't allow string values in enums
-  * but here is a nice hack =)
-  */
-  Posts = <any>'Posts',
-  Categories = <any>'Categories',
-  Tags = <any>'Tags',
-  Users = <any>'Users',
-  Pages = <any>'Pages'
-}
-
-export enum ModelType{
-  Post = <any>'Post',
-  Category = <any>'Category',
-  Tag = <any>'Tag',
-  User = <any>'User',
-  Page = <any>'Page'
-}
-
-
-export class PostResponse{
-  /*  override post response with additional functions.  */
-  _post;
-  constructor(post) {
-    this._post = post;
-  }
-  id(){
-    return +this._post.id;
-  }
-  title(){
-    return this._post.title.rendered;
-  }
-  slug(){
-    return this._post.slug;
-  }
-  date(){
-    return this._post.date;
-  }
-  modified(){
-    return this._post.modified;
-  }
-  content(){
-    return this._post.content.rendered;
-  }
-  excerpt(){
-    return this._post.excerpt.rendered;
-  }
-  author(){
-    return this._post._embedded.author[0];
-  }
-  categories(){
-    if (this._post._embedded) {
-      return this._post._embedded['https://api.w.org/term'][0];
-    }
-  }
-  tags(){
-    if (this._post._embedded) {
-      return this._post._embedded['https://api.w.org/term'][1];
-    }
-  }
-  link(){
-    return this._post.link;
-  }
-  comments(){
-    if (this._post._embedded) {
-      return this['_embedded'].replies;
-    }
-  }
-  featuredImage(size) {
-    if (this.featuredMedia() && this._post._embedded) {
-      var featuredImage = this._post._embedded['https://api.w.org/featuredmedia'][0];
-      if(featuredImage){
-        if (featuredImage.media_details.sizes[size]) {
-          return featuredImage.media_details.sizes[size].source_url;
-        }
-        else {
-          return featuredImage.media_details.sizes['full'].source_url;
-        }
-      }
-    }
-    else
-      return 'http://www.faygoluvers.net/v5/wp-content/themes/original/images/no_image_available_s_large.jpg';
-
-  }
-  featuredMedia(){
-    return +this._post.featured_media;
-  }
-}
+// import { Injectable } from 'angular2/core';
+//
+// @Injectable()
+// export class CollectionService{
+//   service;     //our service handler. (bound directly to the view)
+//
+//   constructor(){ }
+//
+//   fetch(collectionType: CollectionType, args?){
+//     if(!this.service) {
+//       this.service = new window['wp']['api']['collections'][collectionType]();
+//     }
+//     var queryArgs = {};
+//     // set queryArgs
+//     if(args){
+//       queryArgs = {
+//         data: args
+//       };
+//     }
+//     return this.service.fetch(queryArgs);
+//   }
+//
+//   more() {
+//     //check if the service has been initialized, fetch the data
+//     if(!this.service){
+//       console.log("WPService: you forgot to call Initialize() first.");
+//       return;
+//     }
+//     //get more posts (next page)
+//     return this.service.more();
+//   }
+// }
+//
+// @Injectable()
+// export class ModelService{
+//   service;
+//
+//   constructor(){ }
+//
+//   fetch(Id , modelType: ModelType){
+//
+//     if(!this.service){
+//       this.service = new window['wp']['api']['models'][modelType]({ id: Id});
+//     }
+//     return this.service.fetch();
+//   }
+// }
+//
+// export enum CollectionType{
+//   /*
+//   * typescript 1.8 doesn't allow string values in enums
+//   * but here is a nice hack =)
+//   */
+//   Posts = <any>'Posts',
+//   Categories = <any>'Categories',
+//   Tags = <any>'Tags',
+//   Users = <any>'Users',
+//   Pages = <any>'Pages'
+// }
+//
+// export enum ModelType{
+//   Post = <any>'Post',
+//   Category = <any>'Category',
+//   Tag = <any>'Tag',
+//   User = <any>'User',
+//   Page = <any>'Page'
+// }
+//
+//
+// export class PostResponse{
+//   /*  override post response with additional functions.  */
+//   _post;
+//   constructor(post) {
+//     this._post = post;
+//   }
+//   id(){
+//     return +this._post.id;
+//   }
+//   title(){
+//     return this._post.title.rendered;
+//   }
+//   slug(){
+//     return this._post.slug;
+//   }
+//   date(){
+//     return this._post.date;
+//   }
+//   modified(){
+//     return this._post.modified;
+//   }
+//   content(){
+//     return this._post.content.rendered;
+//   }
+//   excerpt(){
+//     return this._post.excerpt.rendered;
+//   }
+//   author(){
+//     return this._post._embedded.author[0];
+//   }
+//   categories(){
+//     if (this._post._embedded) {
+//       return this._post._embedded['https://api.w.org/term'][0];
+//     }
+//   }
+//   tags(){
+//     if (this._post._embedded) {
+//       return this._post._embedded['https://api.w.org/term'][1];
+//     }
+//   }
+//   link(){
+//     return this._post.link;
+//   }
+//   comments(){
+//     if (this._post._embedded) {
+//       return this['_embedded'].replies;
+//     }
+//   }
+//   featuredImage(size) {
+//     if (this.featuredMedia() && this._post._embedded) {
+//       var featuredImage = this._post._embedded['https://api.w.org/featuredmedia'][0];
+//       if(featuredImage){
+//         if (featuredImage.media_details.sizes[size]) {
+//           return featuredImage.media_details.sizes[size].source_url;
+//         }
+//         else {
+//           return featuredImage.media_details.sizes['full'].source_url;
+//         }
+//       }
+//     }
+//     else
+//       return 'http://www.faygoluvers.net/v5/wp-content/themes/original/images/no_image_available_s_large.jpg';
+//
+//   }
+//   featuredMedia(){
+//     return +this._post.featured_media;
+//   }
+// }
 
 
 

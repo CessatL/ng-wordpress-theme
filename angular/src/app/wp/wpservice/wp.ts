@@ -1,25 +1,24 @@
 import { Injectable } from 'angular2/core';
-import {Http} from "angular2/http";
+import {Http} from 'angular2/http';
+import {AppState} from '../../app.service';
 
 
 @Injectable()
 export class WPCollections{
 
-  base;
+  baseURL;
   args;
-  endpoint: WPEnpoint;
-  currentPage :number;
-  totalPages :number;
-  totalObjects :number;
+  currentPage;
+  totalPages;
+  totalObjects;
 
-  constructor(private http: Http){
-    this.base = window['app_config'].site_url;
+  constructor(private http: Http, endpoint: WPEnpoint, appState: AppState){
+    this.baseURL = appState.get().config.site_url + endpoint;
     this.currentPage = 1;
     this.totalPages = 1;
     this.totalObjects = 0;
   }
-  fetch(endpoint: WPEnpoint, args?){
-    this.endpoint = endpoint;
+  fetch(args?){
     this.args = args;
 
     return this.http.get(this.generateUrl()).map(res => {
@@ -42,12 +41,12 @@ export class WPCollections{
     return (this.currentPage < this.totalPages);
   }
   generateUrl(){
-    var url = this.base + this.endpoint;
+    var url = this.baseURL;
     if(this.args){
       url += '?' + serialize(this.args);
       this.currentPage = (this.args.page) ? +this.args.page : 1;
     }
-    console.log("Generated URL: " + url);
+    console.log("Fetch Collection: " + url);
     return url;
   }
 }
@@ -55,15 +54,15 @@ export class WPCollections{
 @Injectable()
 export class WPModels{
 
-  base;
+  baseURL;
 
-  constructor(private http: Http){
-    this.base = window['app_config'].site_url;
+  constructor(private http: Http, endpoint: WPEnpoint, appState: AppState){
+    this.baseURL = appState.get('config').site_url + endpoint;
   }
-  fetch(endpoint: WPEnpoint, id: number, args?){
-    var url = this.base + endpoint + '/' + id;
+  fetch(id: number, args?){
+    var url = this.baseURL + '/' + id;
     if(args) url += '?' + serialize(args);
-    console.log("Fetch: " + url);
+    console.log("Fetch Model: " + url);
     return this.http.get(url).map(res => res.json());
   }
 }

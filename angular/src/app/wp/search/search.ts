@@ -4,10 +4,10 @@ import {Component} from 'angular2/core';
   selector: 'search',
   template: `
       
-        <form>
+        <form (submit)="searchFor(input.value)">
           <md-input-container class="md-block">
             <label for="searchInput">Search</label>
-            <input type="text" (keyup.enter)="searchFor(input.value)" md-input #input md-autofocus>
+            <input type="text" #input md-input md-autofocus>
           </md-input-container>  
         </form>
         <md-content>

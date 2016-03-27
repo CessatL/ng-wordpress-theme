@@ -1,6 +1,8 @@
 import { Component } from 'angular2/core';
 import { RouteParams } from 'angular2/router';
 import { WPCollections, WPEnpoint } from '../wpservice/wp';
+import {Http} from "angular2/http";
+import {AppState} from "../../app.service";
 
 @Component({
   selector: 'user',
@@ -21,12 +23,14 @@ export class UserCmp {
   user;
   queryArgs;
   postsQueryArgs;
-
-  constructor(private wp: WPCollections, private _params: RouteParams) {
+  wp: WPCollections;
+  
+  constructor(private _params: RouteParams, http: Http, appState: AppState) {
+    this.wp = new WPCollections(http, WPEnpoint.Users, appState)
     this.queryArgs = { perPage: 1, search: _params.get('slug') };
   }
   ngOnInit(){
-    this.wp.fetch(WPEnpoint.Users, this.queryArgs).subscribe(
+    this.wp.fetch(this.queryArgs).subscribe(
       res=>{
         this.user = res[0];
         this.postsQueryArgs = { filter: { author: this.user.id }};

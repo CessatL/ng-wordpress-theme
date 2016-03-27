@@ -1,13 +1,19 @@
-//$md-font-url: 'node_modules/ng2-material/font/'; //'https://fonts.googleapis.com/icon?family=Material+Icons'
-//@import "node_modules/ng2-material/font/font.scss";
 @import "node_modules/ng2-material/source/all";
 
 @import "node_modules/ng2-material/source/core";
 $md-primary: md-palette($md-brown, 500, 100, 700, $md-contrast-palettes);
 $md-accent: md-palette($md-deep-orange, 500, 300, 700, $md-contrast-palettes);
 
-.container{
-  max-width: 900px;
-  overflow: hidden;
-  margin: 0 auto;
+nav ul {
+    display: inline;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 60px;
+}
+nav li {
+    display: inline;
+}
+nav li.active {
+    background-color: lightgray;
 }

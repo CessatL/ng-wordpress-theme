@@ -1,8 +1,9 @@
 import {Component} from 'angular2/core';
 import {RouteParams} from 'angular2/router';
-//import {CollectionService, CollectionType} from '../wpservice/wpservice';
 import {WPCollections, WPEnpoint} from '../wpservice/wp';
 import {DynamicCmp} from '../../shared/dynamic/dynamic';
+import{AppState} from '../../app.service';
+import {Http} from "angular2/http";
 
 @Component({
 	selector: 'page',
@@ -14,19 +15,19 @@ export class PageCmp {
 
   slug;
   page;
-  loadingState = false;
-  constructor(private _params:RouteParams, private wp: WPCollections) {
-
+  wp: WPCollections;
+  constructor(private _params:RouteParams, http: Http, appState: AppState) {
+    this.wp = new WPCollections(http, WPEnpoint.Pages, appState)
     this.slug = _params.get('slug');
   }
 
   ngOnInit() {
-    this.loadingState = true;
+    //this.appState.set('loadState', true);
     var queryArgs = { filter: { name: this.slug}}
 
-    this.wp.fetch(WPEnpoint.Pages, queryArgs).subscribe((res)=>{
+    this.wp.fetch(queryArgs).subscribe((res)=>{
       this.page = res[0];
-      this.loadingState = false;
+      //this.appState.set('loadState', false);
     });
   }
 

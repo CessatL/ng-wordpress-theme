@@ -1,5 +1,7 @@
 import {Input, Component, OnChanges, SimpleChange} from 'angular2/core';
 import {WPCollections, WPEnpoint, PostResponse} from '../wpservice/wp';
+import {Http} from "angular2/http";
+import {AppState} from "../../app.service";
 
 @Component({
   selector: 'posts',
@@ -13,16 +15,18 @@ export class PostsCmp implements OnChanges  {
 
   posts = new Array<PostResponse>();
   loadingState = false;
+  wp: WPCollections;
 
 
-  constructor(private wp: WPCollections) {
+  constructor(http: Http, appState: AppState) {
+    this.wp = new WPCollections(http, WPEnpoint.Posts,appState);
   }
   ngOnInit(){
   }
   fetch(args) {
     this.posts.length = 0; //reset our posts array
     this.loadingState = true;
-    this.wp.fetch(WPEnpoint.Posts, args).subscribe(
+    this.wp.fetch(args).subscribe(
       res => {
         for (var post of res) {
           this.posts.push(new PostResponse(post));

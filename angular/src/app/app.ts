@@ -1,6 +1,10 @@
-import {Component, ViewEncapsulation} from 'angular2/core';
-import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
-import {FORM_PROVIDERS} from 'angular2/common';
+/*
+ * Angular 2 decorators and services
+ */
+import {Component, ViewEncapsulation, OnChanges, SimpleChange} from 'angular2/core';
+import {RouteConfig, Router} from 'angular2/router';
+
+import {AppState} from './app.service';
 
 import {HomeCmp} from './components/home/home';
 import {NotFoundCmp} from './components/404/404'
@@ -10,10 +14,15 @@ import {SingleCmp} from './wp/single/single';
 import {CatCmp} from './wp/cats/cat';
 import {UserCmp} from './wp/users/user';
 
+/*
+ * App Component
+ * Top Level Component
+ */
 @Component({
   selector: 'app',
-  providers: [ ...FORM_PROVIDERS],
-  directives: [ ...ROUTER_DIRECTIVES, HeaderCmp],
+  pipes: [ ],
+  providers: [AppState],
+  directives: [HeaderCmp],
   styles: [require('./app.scss')],
   encapsulation: ViewEncapsulation.None,
   template: require('./app.html')
@@ -30,11 +39,25 @@ import {UserCmp} from './wp/users/user';
 
   { path: '/**', component: NotFoundCmp, name: 'NotFound' }
 ])
-export class App {
-  //use window['app_config'].template_directory for path to your wp theme
+export class App{
 
-  constructor() {
+  constructor(public appState: AppState) {
+    this.appState.set('loadState', false);
+    this.appState.set('config', window['app_config']);  //set our configuration
   }
+
+  ngOnInit() {
+  }
+  get loadState() {
+    return this.appState.get().loadState;
+  }
+
 }
 
-
+/*
+ * Please review the https://github.com/AngularClass/angular2-examples/ repo for
+ * more angular app examples that you may copy/paste
+ * (The examples may not be updated as quickly. Please open an issue on github for us to update it)
+ * For help or questions please contact us at @AngularClass on twitter
+ * or our chat on Slack at https://AngularClass.com/slack-join
+ */

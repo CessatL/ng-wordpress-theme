@@ -11,7 +11,7 @@
     </md-list-item>
   </md-list>
 </div>
-<loader [active]="loadingState"></loader>
+<md-progress-linear [hidden]="!loadingState" mode="indeterminate"></md-progress-linear>
 <div class="loadmore">
 
   <p>Showing {{wp.currentPage}} / {{wp.totalPages}} | Total Posts: {{wp.totalObjects}}</p>

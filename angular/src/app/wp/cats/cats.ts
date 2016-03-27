@@ -1,6 +1,8 @@
 import { Component } from 'angular2/core';
 import { WPCollections, WPEnpoint } from '../wpservice/wp';
 import { RouterLink } from 'angular2/router';
+import {Http} from "angular2/http";
+import {AppState} from "../../app.service";
 
 @Component({
   selector: 'categories',
@@ -12,7 +14,9 @@ export class CatsCmp {
   categories;
   loadingState = false;
   queryArgs;
-  constructor(private wp: WPCollections) {
+  wp: WPCollections;
+  constructor(http: Http, appState: AppState) {
+    this.wp = new WPCollections(http, WPEnpoint.Categories, appState);
   }
   ngOnInit(){
     this.queryArgs = {
@@ -22,7 +26,7 @@ export class CatsCmp {
       }
     }
     this.loadingState = true;
-    this.wp.fetch(WPEnpoint.Categories, this.queryArgs).subscribe(
+    this.wp.fetch(this.queryArgs).subscribe(
       res=>{
         this.categories = res;
         this.loadingState = false;
