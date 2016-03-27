@@ -15,12 +15,14 @@ import {Media, SidenavService} from 'ng2-material/source/all';
 export class HeaderCmp {
 
   menu;
-  siteTitle
+  siteTitle;
   constructor(private sidenav: SidenavService) {
   }
   ngOnInit() {
-    this.menu = window['main_menu'];
-    this.siteTitle = window['site_title'];
+    var config = window['app_config'];
+    console.log(config.menu);
+    this.menu = config.menu; 
+    this.siteTitle = config.site_title;
   }
 
   hasMedia(breakSize: string): boolean {

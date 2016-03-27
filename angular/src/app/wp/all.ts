@@ -1,0 +1,53 @@
+import {CONST_EXPR, Type} from 'angular2/src/facade/lang';
+
+import { SearchCmp } from '../wp/search/search';
+export * from '../wp/search/search';
+
+import { PostsCmp } from '../wp/posts/posts';
+import { PostCmp } from '../wp/post/post'; 
+export * from '../wp/posts/posts';
+export * from '../wp/post/post';
+
+import { CatsCmp } from '../wp/cats/cats';
+import { CatCmp } from '../wp/cats/cat';
+export * from '../wp/cats/cat';
+export * from '../wp/cats/cats';
+
+import { TagsCmp } from '../wp/tags/tags';
+export * from '../wp/tags/tags';
+
+import { UserCmp } from '../wp/users/user';
+import { UsersCmp } from '../wp/users/users';
+export * from '../wp/users/users';
+export * from '../wp/users/user';
+
+
+// import { ModelService, CollectionService } from './wpservice/wpservice';
+// export * from './wpservice/wpservice';
+
+import { WPModels, WPCollections } from './wpservice/wp';
+export * from './wpservice/wp';
+
+/**
+ * Collection of wordpress component directives.
+ */
+export const WORDPRESS_DIRECTIVES: Type[] = CONST_EXPR([
+  PostsCmp,
+  PostCmp,
+  CatsCmp,
+  CatCmp,
+  TagsCmp,
+  UserCmp,
+  UsersCmp,
+  SearchCmp
+]);
+
+/**
+ * Collection of wordpress services providers.
+ */
+export const WORDPRESS_PROVIDERS: any[] = [
+  // ModelService,
+  // CollectionService
+  WPModels, 
+  WPCollections
+];

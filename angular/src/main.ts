@@ -17,7 +17,8 @@ import {HTTP_PROVIDERS} from 'angular2/http';
  * our top level component that holds all of our components
  */
 import {App} from './app/app';
-import {WORDPRESS_DIRECTIVES, WORDPRESS_PROVIDERS} from './app/shared/all';
+import {WORDPRESS_DIRECTIVES, WORDPRESS_PROVIDERS} from './app/wp/all';
+import {SHARED_DIRECTIVES} from './app/shared/all';
 import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from 'ng2-material/source/all';
 
 /*
@@ -31,14 +32,15 @@ const APPLICATION_PROVIDERS = [
   ...FORM_PROVIDERS,
   MATERIAL_PROVIDERS,
   WORDPRESS_PROVIDERS,
-  //ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy })
+  ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy })
 ];
 
 // application_directives: directives that are global through out the application
 const APPLICATION_DIRECTIVES = [
   ...ROUTER_DIRECTIVES,
   MATERIAL_DIRECTIVES,
-  WORDPRESS_DIRECTIVES
+  WORDPRESS_DIRECTIVES,
+  SHARED_DIRECTIVES
 ];
 
 // application_pipes: pipes that are global through out the application

@@ -10,7 +10,9 @@
     <?php wp_head(); ?>
 </head>
 <body>
-    <app></app>
+    <app>
+        Loading...
+    </app>
     <?php wp_footer(); ?>
 </body>
 </html>
