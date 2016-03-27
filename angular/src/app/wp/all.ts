@@ -4,7 +4,7 @@ import { SearchCmp } from '../wp/search/search';
 export * from '../wp/search/search';
 
 import { PostsCmp } from '../wp/posts/posts';
-import { PostCmp } from '../wp/post/post'; 
+import { PostCmp } from '../wp/post/post';
 export * from '../wp/posts/posts';
 export * from '../wp/post/post';
 
@@ -21,9 +21,6 @@ import { UsersCmp } from '../wp/users/users';
 export * from '../wp/users/users';
 export * from '../wp/users/user';
 
-
-// import { ModelService, CollectionService } from './wpservice/wpservice';
-// export * from './wpservice/wpservice';
 
 import { WPModels, WPCollections } from './wpservice/wp';
 export * from './wpservice/wp';
@@ -46,8 +43,6 @@ export const WORDPRESS_DIRECTIVES: Type[] = CONST_EXPR([
  * Collection of wordpress services providers.
  */
 export const WORDPRESS_PROVIDERS: any[] = [
-  // ModelService,
-  // CollectionService
-  WPModels, 
+  WPModels,
   WPCollections
 ];
