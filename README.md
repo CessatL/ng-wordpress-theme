@@ -1,7 +1,7 @@
 # ng2-wordpress-theme
 Angular2 + Wordpress starter theme
 
-(Live demo)[http://ng2wordpress-murhaf.rhcloud.com], the theme is still in the early stages.
+[Live demo](http://ng2wordpress-murhaf.rhcloud.com), the theme is still in the early stages.
 
 #### Requirement:
 
