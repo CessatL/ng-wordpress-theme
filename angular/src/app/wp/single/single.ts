@@ -1,26 +1,23 @@
 import {Component} from 'angular2/core';
 import {RouteParams} from 'angular2/router';
-import {PostCmp} from '../post/post';
-
-import {WPCollections, WPEnpoint, PostResponse} from '../wpservice/wp';
+import {WPCollections, WPEndpoint, PostResponse} from '../wpservice/wp';
 import {AppState} from "../../app.service";
 import {Http} from "angular2/http";
+import {PostCmp} from '../post/post';
 
 
 @Component({
   selector: 'single',
-  template: require('./single.html'),
-  directives: [PostCmp]
+  template: require('./single.html')
 })
 export class SingleCmp {
 
   slug;
   type;
   post;
-  loadingState = false;
   wp: WPCollections;
-  constructor(private _params: RouteParams, http: Http, appState: AppState){
-    this.wp = new WPCollections(http,WPEnpoint.Posts, appState);
+  constructor(private _params: RouteParams, http: Http,private appState: AppState){
+    this.wp = new WPCollections(http, WPEndpoint.Posts, appState);
     this.slug = _params.get('slug');
     this.type = _params.get('type');
   }
@@ -31,11 +28,11 @@ export class SingleCmp {
         name: this.slug
       }
     }
-    this.loadingState = true;
+    this.appState.set('loadState', true);
     this.wp.fetch(args).subscribe(
       res => {
         this.post = new PostResponse(res[0]);
-        this.loadingState = false;
+        this.appState.set('loadState', false);
       },
       err => console.log(err)
     );

@@ -1,8 +1,8 @@
 import {Component} from 'angular2/core';
 import {RouteParams} from 'angular2/router';
-import {WPCollections, WPEnpoint} from '../wpservice/wp';
+import {WPCollections, WPEndpoint} from '../wpservice/wp';
 import {DynamicCmp} from '../../shared/dynamic/dynamic';
-import{AppState} from '../../app.service';
+import {AppState} from '../../app.service';
 import {Http} from "angular2/http";
 
 @Component({
@@ -13,22 +13,25 @@ import {Http} from "angular2/http";
 })
 export class PageCmp {
 
-  slug;
+  slug; 
   page;
   wp: WPCollections;
-  constructor(private _params:RouteParams, http: Http, appState: AppState) {
-    this.wp = new WPCollections(http, WPEnpoint.Pages, appState)
+  constructor(_params: RouteParams, http: Http, private appState: AppState) {
+
+    this.wp = new WPCollections(http, WPEndpoint.Pages, appState);
     this.slug = _params.get('slug');
   }
 
   ngOnInit() {
-    //this.appState.set('loadState', true);
-    var queryArgs = { filter: { name: this.slug}}
-
-    this.wp.fetch(queryArgs).subscribe((res)=>{
-      this.page = res[0];
-      //this.appState.set('loadState', false);
-    });
+    this.appState.set('loadState', true);
+    var queryArgs = { filter: { name: this.slug}};
+    this.wp.fetch(queryArgs).subscribe(
+      res => {
+        this.page = res[0];
+        this.appState.set('loadState', false);
+      },
+      err => console.log(err)
+    );
   }
 
   pageTitle() {

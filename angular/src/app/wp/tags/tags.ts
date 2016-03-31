@@ -1,5 +1,7 @@
-import { Component } from 'angular2/core';
-import { WPCollections, WPEnpoint } from '../wpservice/wp';
+import {Component} from 'angular2/core';
+import {WPCollections, WPEndpoint} from '../wpservice/wp';
+import {Http} from "angular2/http";
+import {AppState} from "../../app.service";
 
 @Component({
   selector: 'tags',
@@ -13,13 +15,17 @@ import { WPCollections, WPEnpoint } from '../wpservice/wp';
 })
 
 export class TagsCmp {
+  wp:WPCollections
   tags;
   loadingState = false;
-  constructor(private wp: WPCollections) {
+
+  constructor(http:Http, appState:AppState) {
+    this.wp = new WPCollections(http, WPEndpoint.Tags, appState);
   }
-  ngOnInit(){
+
+  ngOnInit() {
     this.loadingState = true;
-    this.wp.fetch(WPEnpoint.Tags).subscribe(
+    this.wp.fetch().subscribe(
       res=> {
         this.tags = res;
         this.loadingState = false;

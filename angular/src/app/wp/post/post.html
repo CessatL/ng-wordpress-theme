@@ -1,19 +1,23 @@
 <div class="container">
-  <div class="post-image">
-    <img *ngIf="post.featuredMedia()" [src]="post.featuredImage(featuredImageSize)">
-  </div>
-  <div class="post-title">
-    <h1>{{post.title()}}</h1>
-  </div>
-  <div class="post-meta">
-    <span>Posted on {{post.date()  |  DatePipe:'medium'}}</span>
-    <span>by <a [routerLink]="[ 'User', { slug: post.author().name } ]">{{post.author().name}}</a></span>
-    in
-    <div class="post-categories">
-      <span *ngFor="#cat of post.categories()"><a [routerLink]="[ 'Category', { slug: cat.name } ]">{{cat.name}}</a></span>
+  <div class="post-header">
+    <div class="post-image">
+      <img class="md-avatar" *ngIf="post.featuredMedia()" [src]="post.featuredImage(featuredImageSize)">
+    </div>
+    <div class="post-title">
+      <h1>{{post.title()}}</h1>
+    </div>
+    <div class="post-meta">
+      <span>Posted on {{post.date()  |  DatePipe:'medium'}}</span>
+      <span>by <a [routerLink]="[ '/User', { slug: post.author().name } ]">{{post.author().name}}</a></span>
+      in
+      <div class="post-categories">
+        <span *ngFor="#cat of post.categories()"><a [routerLink]="[ '/Blog', 'CatPosts', { slug: cat.name } ]">{{cat.name}}</a></span>
+      </div>
     </div>
   </div>
-  <div class="post-content" [innerHtml]="post.content()"></div>
+  <div class="post-body">
+    <div class="post-content" [innerHtml]="post.content()"></div>
+  </div>
   <div class="post-share"></div>
   <div class="post-tags">
     <h4>Keywords:</h4>

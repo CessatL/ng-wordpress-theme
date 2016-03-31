@@ -1,7 +1,8 @@
 import {Component} from 'angular2/core';
-import { RouterLink} from 'angular2/router';
-import {WPCollections,WPEnpoint} from '../wpservice/wp';
-
+import {RouterLink} from 'angular2/router';
+import {WPCollections, WPEndpoint} from '../wpservice/wp';
+import {Http} from "angular2/http";
+import {AppState} from "../../app.service";
 
 @Component({
   selector: 'users',
@@ -13,7 +14,8 @@ import {WPCollections,WPEnpoint} from '../wpservice/wp';
         </a>
       </li>
     </ul>
-    <loader [active]="loadingState"></loader>
+    <md-progress-circular class="md-accent md-hue-1" mode="indeterminate"
+       [hidden]="!loadingState" [diameter]="60"></md-progress-circular>
     <div class="loadmore">
     
       <p>Showing {{wp.currentPage}} / {{wp.totalPages}} | Total Posts: {{wp.totalObjects}}</p>
@@ -29,11 +31,13 @@ import {WPCollections,WPEnpoint} from '../wpservice/wp';
 export class UsersCmp {
   users;
   loadingState = false;
-  constructor(private wp: WPCollections) {
+  wp: WPCollections;
+  constructor(http: Http, appState: AppState) {
+    this.wp = new WPCollections(http, WPEndpoint.Users, appState)
   }
   ngOnInit(){
     this.loadingState = true;
-    this.wp.fetch(WPEnpoint.Users).subscribe(
+    this.wp.fetch().subscribe(
       res=>{
         this.users = res;
         this.loadingState = false;

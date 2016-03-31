@@ -1,43 +1,44 @@
-import { Component } from 'angular2/core';
-import { WPCollections, WPEnpoint } from '../wpservice/wp';
-import { RouterLink } from 'angular2/router';
+import {Component} from 'angular2/core';
+import {WPCollections, WPEndpoint} from '../wpservice/wp';
 import {Http} from "angular2/http";
 import {AppState} from "../../app.service";
 
 @Component({
-  selector: 'categories',
-  template: require('./cats.html'),
-  directives: [RouterLink]
+  selector: 'cats',
+  template: require('./cats.html')
 })
 export class CatsCmp {
 
   categories;
   loadingState = false;
   queryArgs;
-  wp: WPCollections;
-  constructor(http: Http, appState: AppState) {
-    this.wp = new WPCollections(http, WPEnpoint.Categories, appState);
+  wp:WPCollections;
+
+  constructor(http:Http, appState:AppState) {
+    this.wp = new WPCollections(http, WPEndpoint.Categories, appState);
   }
-  ngOnInit(){
+
+  ngOnInit() {
     this.queryArgs = {
-      filter : {
+      filter: {
         orderby: 'title',
         order: 'ASC'
       }
     }
     this.loadingState = true;
     this.wp.fetch(this.queryArgs).subscribe(
-      res=>{
+      res=> {
         this.categories = res;
         this.loadingState = false;
       },
       err=>console.log(err)
     );
   }
-  loadMore() {
+
+  more() {
     this.loadingState = true;
     this.wp.more().subscribe(
-      res=>{
+      res=> {
         this.categories = this.categories.concat(res);
         this.loadingState = false;
       },

@@ -3,7 +3,7 @@
     <md-list-item class="md-3-line" *ngFor="#post of posts" >
       <img class="md-avatar" [src]="post.featuredImage(featuredImageSize)">
       <div class="md-list-item-text" layout="column">
-        <a [routerLink]="['Post', { slug: post.slug() } ]">
+        <a [routerLink]="['/Post', { slug: post.slug() } ]">
           {{post.title()}}
         </a>
         <p [innerHtml]="post.excerpt()"></p>
@@ -11,12 +11,12 @@
     </md-list-item>
   </md-list>
 </div>
-<md-progress-linear [hidden]="!loadingState" mode="indeterminate"></md-progress-linear>
-<div class="loadmore">
 
+<div class="loadmore">
+  <md-progress-circular class="md-accent md-hue-1" mode="indeterminate"
+                        [hidden]="!loadingState" [diameter]="80"></md-progress-circular>
   <p>Showing {{wp.currentPage}} / {{wp.totalPages}} | Total Posts: {{wp.totalObjects}}</p>
 
 <button md-raised-button class="md-raised md-primary" (click)="more()"
-    *ngIf="wp.hasMore() && !loadingState"
-  >Load More</button>
+    *ngIf="wp.hasMore() && !loadingState">Load More</button>
 </div>

@@ -1,38 +1,23 @@
+<!-- Sidebar Navigation -->
 <md-sidenav-container layout="row" flex>
   <md-sidenav name="menu">
-    <md-toolbar class="md-tall md-warn">
+    <md-toolbar class="md-warn">
       <span flex></span>
       <h2 class="md-toolbar-tools md-toolbar-tools-bottom">
         <span class="md-flex">Main Menu</span>
       </h2>
     </md-toolbar>
-
     <md-content layout-padding>
       <md-list>
-        <md-list-item md-ink role="listitem" *ngFor="#menuItem of menu">
-          <span [ngSwitch]="menuItem.type">
-            <span *ngSwitchWhen="'Post'">
-              <a class="md-no-style md-list-item-inner" [routerLink]="[ 'Post', { slug: menuItem.slug } ]" (click)="close('menu')">
-                <span class="md-button-wrapper">{{menuItem.title}}</span>
-              </a>
-            </span>
-            <span *ngSwitchWhen="'Page'">
-              <a class="md-no-style md-list-item-inner" [routerLink]="[ 'Page', { slug: menuItem.slug } ]" (click)="close('menu')">
-                <span class="md-button-wrapper">{{menuItem.title}}</span>
-              </a>
-            </span>
-            <span *ngSwitchWhen="'Custom'">
-              <a class="md-no-style md-list-item-inner" [href]="menuItem.url" (click)="close('menu')">
-                <span class="md-button-wrapper">{{menuItem.title}}</span>
-              </a>
-            </span>
-             <span *ngSwitchWhen="'Category'">
-              <a class="md-no-style md-list-item-inner" [routerLink]="[ 'Category', { slug: menuItem.slug } ]" (click)="close('menu')">
-                <span class="md-button-wrapper">{{menuItem.title}}</span>
-              </a>
-            </span>
-          </span>
-
+        <md-list-item md-ink  role="listitem">
+          <div class="md-no-style md-list-item-inner" [routerLink]="['/Blog']" (click)="close('menu')">
+            <span class="md-button-wrapper">Blog</span>
+          </div>
+        </md-list-item>
+        <md-list-item md-ink  role="listitem" *ngFor="#menuItem of menu">
+          <div class="md-no-style md-list-item-inner" (click)="goToLink(menuItem)">
+            <span class="md-button-wrapper">{{menuItem.title}}</span>
+          </div>
         </md-list-item>
       </md-list>
     </md-content>
@@ -50,14 +35,12 @@
         </button>
       </div>
     </md-toolbar>
-
-    <md-content layout-padding>
+    <md-content layout-padding class="scrollable">
       <search></search>
     </md-content>
   </md-sidenav>
-
 </md-sidenav-container>
-
+<!--Mainmenu bar-->
 <md-toolbar>
   <div class="md-toolbar-tools">
     <button md-button class="md-icon-button" aria-label="Menu" (click)="open('menu')" hide-gt-md>
@@ -68,28 +51,23 @@
     </h2>
     <span flex></span>
     <div hide show-gt-md>
+      <a md-button md-ink [routerLink]="['/Blog']">
+        <span class="md-button-wrapper">Blog</span>
+      </a>
       <span *ngFor="#menuItem of menu">
-        <span  md-button md-ink  [ngSwitch]="menuItem.type">
-          <span *ngSwitchWhen="'Post'">
-            <a class="md-no-style md-list-item-inner" [routerLink]="[ 'Post', { slug: menuItem.slug } ]" (click)="close('menu')">
-              <span class="md-button-wrapper">{{menuItem.title}}</span>
-            </a>
-          </span>
-          <span *ngSwitchWhen="'Page'">
-            <a class="md-no-style md-list-item-inner" [routerLink]="[ 'Page', { slug: menuItem.slug } ]" (click)="close('menu')">
-              <span class="md-button-wrapper">{{menuItem.title}}</span>
-            </a>
-          </span>
-          <span *ngSwitchWhen="'Custom Link'">
-            <a class="md-no-style md-list-item-inner" [href]="menuItem.url" (click)="close('menu')">
-              <span class="md-button-wrapper">{{menuItem.title}}</span>
-            </a>
-          </span>
-           <span *ngSwitchWhen="'Category'">
-            <a class="md-no-style md-list-item-inner" [routerLink]="[ 'Category', { slug: menuItem.slug } ]" (click)="close('menu')">
-              <span class="md-button-wrapper">{{menuItem.title}}</span>
-            </a>
-          </span>
+        <span [ngSwitch]="menuItem.type">
+          <a md-button md-ink *ngSwitchWhen="'Post'" [routerLink]="[ '/Post', { slug: menuItem.slug } ]">
+            <span class="md-button-wrapper">{{menuItem.title}}</span>
+          </a>
+          <a md-button md-ink *ngSwitchWhen="'Page'" [routerLink]="[ '/Page', { slug: menuItem.slug } ]">
+            <span class="md-button-wrapper">{{menuItem.title}}</span>
+          </a>
+          <a md-button md-ink *ngSwitchWhen="'Custom Link'" target="_blank" [href]="menuItem.url">
+            <span class="md-button-wrapper">{{menuItem.title}}</span>
+          </a>
+          <a md-button md-ink *ngSwitchWhen="'Category'" [routerLink]="[ '/Blog', 'CatPosts', { slug: menuItem.slug } ]">
+            <span class="md-button-wrapper">{{menuItem.title}}</span>
+          </a>
         </span>
       </span>
     </div>

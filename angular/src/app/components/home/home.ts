@@ -1,6 +1,6 @@
 import {Component} from 'angular2/core';
 import {DynamicCmp} from "../../shared/dynamic/dynamic";
-import {WPModels, WPEnpoint} from '../../wp/wpservice/wp';
+import {WPModels, WPEndpoint} from '../../wp/wpservice/wp';
 import {AppState} from '../../app.service';
 import {Http} from "angular2/http";
 
@@ -10,7 +10,7 @@ import {Http} from "angular2/http";
   template: `
   <div class="page-content container">
     <dynamic [dynamic]="pageContent()"></dynamic>
-  </div>
+  </div> 
   `
 })
 export class HomeCmp {
@@ -18,7 +18,7 @@ export class HomeCmp {
   page;
   wp: WPModels;
   constructor(http: Http, private appState: AppState) {
-    this.wp = new WPModels(http, WPEnpoint.Pages, appState)
+    this.wp = new WPModels(http, WPEndpoint.Pages, appState)
   }
   ngOnInit() {
     var pageId = this.appState.get('config').home_id;

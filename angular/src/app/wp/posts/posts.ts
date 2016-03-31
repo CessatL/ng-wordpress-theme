@@ -1,5 +1,5 @@
 import {Input, Component, OnChanges, SimpleChange} from 'angular2/core';
-import {WPCollections, WPEnpoint, PostResponse} from '../wpservice/wp';
+import {WPCollections, WPEndpoint, PostResponse} from '../wpservice/wp';
 import {Http} from "angular2/http";
 import {AppState} from "../../app.service";
 
@@ -19,7 +19,7 @@ export class PostsCmp implements OnChanges  {
 
 
   constructor(http: Http, appState: AppState) {
-    this.wp = new WPCollections(http, WPEnpoint.Posts,appState);
+    this.wp = new WPCollections(http, WPEndpoint.Posts,appState);
   }
   ngOnInit(){
   }

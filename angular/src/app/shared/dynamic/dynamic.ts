@@ -1,4 +1,4 @@
-import {Component, Input , DynamicComponentLoader, ElementRef} from 'angular2/core';
+import {Component, Input, DynamicComponentLoader, ElementRef} from 'angular2/core';
 
 @Component({
   selector: 'dynamic',
@@ -6,10 +6,9 @@ import {Component, Input , DynamicComponentLoader, ElementRef} from 'angular2/co
 })
 export class DynamicCmp {
 
-  constructor( 
-    private loader: DynamicComponentLoader,
-    private elementRef: ElementRef
-    ) {}
+  constructor(private loader:DynamicComponentLoader,
+              private elementRef:ElementRef) {
+  }
 
   @Input() set dynamic(content) {
     if (content) {
@@ -17,7 +16,7 @@ export class DynamicCmp {
     }
   }
 
-  renderTemplate(template){
+  renderTemplate(template) {
     this.loader.loadIntoLocation(
       toComponent(template),
       this.elementRef,
@@ -26,12 +25,13 @@ export class DynamicCmp {
   }
 }
 
-function toComponent(template){
+function toComponent(template) {
   @Component({
     selector: 'content',
     template: template,
   })
-  class DynamicComponent {}
+  class DynamicComponent {
+  }
 
   return DynamicComponent;
 }

@@ -1,14 +1,15 @@
-import { Component, Input } from 'angular2/core';
+import {Component} from 'angular2/core';
+import {AppState} from "../../app.service";
 
 @Component({
   selector: 'loader',
+  providers: [AppState],
   template: `
-    <md-progress-linear [hidden]="!active" mode="indeterminate"></md-progress-linear>
+    <md-progress-linear [hidden]="!appState._state.loadState" mode="indeterminate"></md-progress-linear>
   `
 })
 
 export class LoaderCmp {
-  @Input() active;
-  constructor() {
+  constructor(private appState:AppState) {
   }
 }
