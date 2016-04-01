@@ -12,7 +12,7 @@ Angular2 + Wordpress starter theme
 #### Quick Start
 
 ```
-# go to your wordpress theme directory, clone this repo
+# go to your wordpress theme directory
 cd path-to-your-wordpress-theme-directory
 
 # clone the repo
@@ -20,19 +20,5 @@ git clone https://github.com/MurhafSousli/ng2-wordpress-theme.git
 
 # go inside angular directory
 cd angular
-
-# add required global libraries
-npm install typings webpack-dev-server -g
-
-# install the repo with npm
-npm install
-
-# install typings for the app
-typings install
-
-# build the app
-npm build:dev
-
-# Go to your browser and enter your wordpress server address
 ```
-
+follow [Angular2 Webpack Starter](https://github.com/AngularClass/angular2-webpack-starter) setup instruction 
