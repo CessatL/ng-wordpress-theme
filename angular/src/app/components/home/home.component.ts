@@ -1,15 +1,13 @@
 import {Component} from 'angular2/core';
-import {DynamicCmp} from "../../shared/dynamic/dynamic";
-import {WPModels, WPEndpoint} from '../../wp/wpservice/wp';
-import {AppState} from '../../app.service';
+import {WPModels, WPEndpoint} from '../../wp';
+import {AppState} from '../../app.service.ts';
 import {Http} from "angular2/http";
 
 @Component({
   selector: 'home',
-  directives: [DynamicCmp],
   template: `
   <div class="page-content container">
-    <dynamic [dynamic]="pageContent()"></dynamic>
+    <dynamic [content]="pageContent()"></dynamic>
   </div> 
   `
 })

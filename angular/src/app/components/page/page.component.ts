@@ -1,19 +1,17 @@
 import {Component} from 'angular2/core';
 import {RouteParams} from 'angular2/router';
-import {WPCollections, WPEndpoint} from '../wpservice/wp';
-import {DynamicCmp} from '../../shared/dynamic/dynamic';
+import {WPCollections, WPEndpoint} from '../../wp';
 import {AppState} from '../../app.service';
 import {Http} from "angular2/http";
 
 @Component({
 	selector: 'page',
 	template: require('./page.html'),
-  styles: [require('./page.scss')],
-  directives: [DynamicCmp]
+  styles: [require('./page.scss')]
 })
 export class PageCmp {
 
-  slug; 
+  slug;
   page;
   wp: WPCollections;
   constructor(_params: RouteParams, http: Http, private appState: AppState) {

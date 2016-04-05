@@ -1,43 +1,8 @@
 @import "node_modules/ng2-material/source/core.scss";
-//$md-red: (
-//  50: #ffffff,
-//  100: #f9d1d4,
-//  200: #f39fa5,
-//  300: #eb5f6b,
-//  400: #e74451,
-//  500: #e42938,
-//  600: #d41b2a,
-//  700: #b81724,
-//  800: #9d141f,
-//  900: #82101a,
-//  A100: #ffffff,
-//  A200: #f9d1d4,
-//  A400: #e74451,
-//  A700: #b81724,
-//  contrastDefaultColor: light,
-//  contrastDarkColors: 50 100 200 300 A100 A200
-//);
-//$md-cyan: (
-//  50: #def7f5,
-//  100: #a0e9e2,
-//  200: #72dfd4,
-//  300: #38d1c3,
-//  400: #2cbfb1,
-//  500: #26a69a,
-//  600: #208d83,
-//  700: #1b746c,
-//  800: #155b55,
-//  900: #0f423e,
-//  A100: #def7f5,
-//  A200: #a0e9e2,
-//  A400: #2cbfb1,
-//  A700: #1b746c,
-//  contrastDefaultColor: light,
-//  contrastDarkColors: 50 100 200 300 400 A100 A200 A400
-//);
+
 $md-is-dark-theme: false;
 
-$md-primary: md-palette($md-teal, 500, 300, 700, $md-contrast-palettes);
+$md-primary: md-palette($md-brown, 500, 300, 700, $md-contrast-palettes);
 $md-accent: md-palette($md-red, 500, 300, 700, $md-contrast-palettes);
 $md-background: md-palette($md-grey, 500, 0, 600, $md-contrast-palettes);
 $md-warn: md-palette($md-lime, 500, 100, 700, $md-contrast-palettes);
@@ -46,10 +11,11 @@ $md-foreground: if($md-is-dark-theme, $md-dark-theme-foreground, $md-light-theme
 @import "node_modules/ng2-material/source/components.scss";
 
 .container{
-  width: 100%;
-  max-width: 800px;
   overflow: hidden;
   //background-color: honeydew;
+  margin: 0 auto;
+  max-width: 800px;
+  width: 100%;
 }
 .page-content, .post-content{
   img{
@@ -76,7 +42,17 @@ loader{
 main{
   display: flex;
   flex: 1;
-  justify-content: center;
+  > :not(router-outlet){
+    display: flex;
+    flex-direction: column;
+    flex: 1 100%;
+    justify-content: center;
+    > *{
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+  }
 }
 footer{
 
@@ -87,6 +63,9 @@ footer{
   min-height: 100vh;
   overflow-y: auto;
 }
-.container{
-
+.scrollable{
+  overflow-y: auto !important;
+}
+blog-posts{
+  margin-left: 200px;
 }
