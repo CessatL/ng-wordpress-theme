@@ -15,12 +15,13 @@
 > An Angular 2 starter kit featuring [Angular 2](https://angular.io) ([Router](https://angular.io/docs/js/latest/api/router/), [Forms](https://angular.io/docs/js/latest/api/forms/),
 [Http](https://angular.io/docs/js/latest/api/http/),
 [Services](https://gist.github.com/gdi2290/634101fec1671ee12b3e#_follow_@AngularClass_on_twitter),
-[Tests](https://angular.io/docs/js/latest/api/test/), [E2E](https://angular.github.io/protractor/#/faq#what-s-the-difference-between-karma-and-protractor-when-do-i-use-which-)), [Karma](https://karma-runner.github.io/), [Protractor](https://angular.github.io/protractor/), [Jasmine](https://github.com/jasmine/jasmine), [Istanbul](https://github.com/gotwarlost/istanbul), [TypeScript](http://www.typescriptlang.org/), [Typings](https://github.com/typings/typings), [TsLint](http://palantir.github.io/tslint/), [Ng2Lint](https://github.com/mgechev/ng2lint), [Hot Module Replacement](https://webpack.github.io/docs/hot-module-replacement-with-webpack.html), and [Webpack](http://webpack.github.io/) by [AngularClass](https://angularclass.com).
+[Tests](https://angular.io/docs/js/latest/api/test/), [E2E](https://angular.github.io/protractor/#/faq#what-s-the-difference-between-karma-and-protractor-when-do-i-use-which-)), [Karma](https://karma-runner.github.io/), [Protractor](https://angular.github.io/protractor/), [Jasmine](https://github.com/jasmine/jasmine), [Istanbul](https://github.com/gotwarlost/istanbul), [TypeScript](http://www.typescriptlang.org/), [Typings](https://github.com/typings/typings), [TsLint](http://palantir.github.io/tslint/), [Codelyzer](https://github.com/mgechev/codelyzer), [Hot Module Replacement](https://webpack.github.io/docs/hot-module-replacement-with-webpack.html), and [Webpack](http://webpack.github.io/) by [AngularClass](https://angularclass.com).
 
 > If you're looking for Angular 1.x please use [NG6-starter](https://github.com/angularclass/NG6-starter)  
 > If you're looking to learn about Webpack and ES6 Build Tools check out [ES6-build-tools](https://github.com/AngularClass/ES6-build-tools)  
 > If you're looking to learn TypeScript see [TypeStrong/learn-typescript](https://github.com/TypeStrong/learn-typescript)  
-> If you're looking for Webpack 2 version then see the experimental version [angular2-webpack2-starter](https://github.com/gdi2290/angular2-webpack2-starter) that will be merged
+> If you're looking for Webpack 2 version then see the experimental version [angular2-webpack2-starter](https://github.com/gdi2290/angular2-webpack2-starter) that will be merged  
+> If you're looking for something easier to get started with then see the offical angular2-seed that I also maintain [angular/angular2-seed](https://github.com/angular/angular2-seed)
 
 This seed repo serves as an Angular 2 starter for anyone looking to get up and running with Angular 2 and TypeScript fast. Using a [Webpack](http://webpack.github.io/) for building our files and assisting with boilerplate. We're also using Protractor for our end-to-end story and Karma for our unit tests.
 * Best practices in file and application organization for Angular 2.
@@ -53,6 +54,9 @@ npm install
 
 # start the server
 npm start
+
+# use Hot Module Replacement
+npm run server:dev:hmr
 ```
 go to [http://0.0.0.0:3000](http://0.0.0.0:3000) or [http://localhost:3000](http://localhost:3000) in your browser
 
@@ -75,6 +79,7 @@ link in the IDE.
     * [Dependencies](#dependencies)
     * [Installing](#installing)
     * [Running the app](#running-the-app)
+* [Configuration](#configuration)
 * [Contributing](#contributing)
 * [TypeScript](#typescript)
 * [Typings](#typings)
@@ -167,6 +172,11 @@ npm run build:dev
 npm run build:prod
 ```
 
+### hot module replacement
+```bash
+npm run server:dev:hmr
+```
+
 ### watch and build files
 ```bash
 npm run watch
@@ -201,6 +211,8 @@ npm run webdriver:start
 npm run e2e:live
 ```
 
+# Configuration
+Configuration files live in `config/` we are currently using webpack, karma, and protractor for different stages of your application
 
 # Contributing
 You can include more examples as components but they must introduce a new concept such as `Home` component (separate folders), and Todo (services). I'll accept pretty much everything so feel free to open a Pull-Request
@@ -295,6 +307,10 @@ see [typings/registry](https://github.com/typings/registry)
  * Remove `node_modules/` and run `npm cache clean` then `npm install`
 * What about Webpack 2?
  * If you're looking for Webpack 2 version then see the [experimental version](https://github.com/gdi2290/angular2-webpack2-starter) that will be merged soon.
+* How do I turn on Hot Module Replacement
+ * Run `npm run server:dev:hmr`
+* `RangeError: Maximum call stack size exceeded`
+ * This is a problem with minifying Angular 2 and it's recent JIT templates. If you set `mangle` to `false` then you should be good.
 
 # Support, Questions, or Feedback
 > Contact us anytime for anything about this repo or Angular 2
