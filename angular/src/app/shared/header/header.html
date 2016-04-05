@@ -1,0 +1,78 @@
+<!-- Sidebar Navigation -->
+<md-sidenav-container layout="row" flex>
+  <md-sidenav name="menu">
+    <md-toolbar class="md-warn">
+      <span flex></span>
+      <h2 class="md-toolbar-tools md-toolbar-tools-bottom">
+        <span class="md-flex">Main Menu</span>
+      </h2>
+    </md-toolbar>
+    <md-content layout-padding>
+      <md-list>
+        <md-list-item md-ink  role="listitem">
+          <div class="md-no-style md-list-item-inner" [routerLink]="['/Blog']" (click)="close('menu')">
+            <span class="md-button-wrapper">Blog</span>
+          </div>
+        </md-list-item>
+        <md-list-item md-ink  role="listitem" *ngFor="#menuItem of menu">
+          <div class="md-no-style md-list-item-inner" (click)="goToLink(menuItem)">
+            <span class="md-button-wrapper">{{menuItem.title}}</span>
+          </div>
+        </md-list-item>
+      </md-list>
+    </md-content>
+  </md-sidenav>
+
+  <md-sidenav name="search" align="right" layout="column">
+    <md-toolbar layout-wrap class="md-theme-light">
+      <div class="md-toolbar-tools">
+        <h2>
+          <span>Looking for something!</span>
+        </h2>
+        <span flex></span>
+        <button md-button class="md-icon-button" aria-label="CloseSearch"  (click)="close('search')">
+          <i class="green" md-icon>close</i>
+        </button>
+      </div>
+    </md-toolbar>
+    <md-content layout-padding class="scrollable">
+      <search></search>
+    </md-content>
+  </md-sidenav>
+</md-sidenav-container>
+<!--Mainmenu bar-->
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <button md-button class="md-icon-button" aria-label="Menu" (click)="open('menu')" hide-gt-md>
+      <i md-icon>menu</i>
+    </button>
+    <h2>
+      <a [routerLink]="[ '/Index' ]" class="brand-logo">{{siteTitle}}</a>
+    </h2>
+    <span flex></span>
+    <div hide show-gt-md>
+      <a md-button md-ink [routerLink]="['/Blog']">
+        <span class="md-button-wrapper">Blog</span>
+      </a>
+      <span *ngFor="#menuItem of menu">
+        <span [ngSwitch]="menuItem.type">
+          <a md-button md-ink *ngSwitchWhen="'Post'" [routerLink]="[ '/Post', { slug: menuItem.slug } ]">
+            <span class="md-button-wrapper">{{menuItem.title}}</span>
+          </a>
+          <a md-button md-ink *ngSwitchWhen="'Page'" [routerLink]="[ '/Page', { slug: menuItem.slug } ]">
+            <span class="md-button-wrapper">{{menuItem.title}}</span>
+          </a>
+          <a md-button md-ink *ngSwitchWhen="'Custom Link'" target="_blank" [href]="menuItem.url">
+            <span class="md-button-wrapper">{{menuItem.title}}</span>
+          </a>
+          <a md-button md-ink *ngSwitchWhen="'Category'" [routerLink]="[ '/Blog', 'CatPosts', { slug: menuItem.slug } ]">
+            <span class="md-button-wrapper">{{menuItem.title}}</span>
+          </a>
+        </span>
+      </span>
+    </div>
+    <button md-button class="md-icon-button" aria-label="Search" (click)="open('search')">
+      <i md-icon>search</i>
+    </button>
+  </div>
+</md-toolbar>
