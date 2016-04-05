@@ -7,9 +7,6 @@ import {provide, PLATFORM_DIRECTIVES} from 'angular2/core';
 // Angular 2 Router
 import {ROUTER_DIRECTIVES} from 'angular2/router';
 
-import {MATERIAL_DIRECTIVES} from 'ng2-material/source/all';
-import {WORDPRESS_DIRECTIVES} from '../../app/wp/all';
-
 // Angular 2 Material 2
 // TODO(gdi2290): uncomment when materal is fixed
 // import {MD_SIDENAV_DIRECTIVES} from '@angular2-material/sidenav';
@@ -25,15 +22,17 @@ import {WORDPRESS_DIRECTIVES} from '../../app/wp/all';
 //   ...MD_CARD_DIRECTIVES
 // ];
 
-// platform common directives
-import {RouterActive} from './router-active';
+import {MATERIAL_DIRECTIVES} from 'ng2-material/source/all';
+import {WORDPRESS_DIRECTIVES} from '../../app/wp';
+import {SHARED_DIRECTIVES} from '../../app/shared';
 
 // application_directives: directives that are global through out the application
 export const APPLICATION_DIRECTIVES = [
   ...ROUTER_DIRECTIVES,
-   MATERIAL_DIRECTIVES,
-   WORDPRESS_DIRECTIVES,
-  RouterActive
+  // ...MATERIAL_DIRECTIVES,
+  MATERIAL_DIRECTIVES,
+  WORDPRESS_DIRECTIVES,
+  SHARED_DIRECTIVES,
 ];
 
 export const DIRECTIVES = [

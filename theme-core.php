@@ -28,7 +28,9 @@ function register_mainmenu()
         } else if ($menutype == "Category") {
             $item_slug = get_category($menu_item->object_id)->slug;
         }
-
+        /*
+         *  create instance of menu-item class and push it to $menu array
+         */
         $item = array(
             'title' => $menu_item->title,
             'slug' => $item_slug,
@@ -40,9 +42,14 @@ function register_mainmenu()
     return $menu;
 }
 
-// function getCategories(){
-//     return wp_dropdown_categories(array('hide_empty' => 1));
-// }
+ function getCategories(){
+     $categories = array();
+     $cats = get_categories();
+     foreach ($cats as $cat){
+         array_push($categories, $cat);
+     }
+     return $categories;
+ }
 
 function register_Config()
 {
@@ -58,7 +65,7 @@ function register_Config()
         'blog_id' => get_option('page_for_posts'),
         'admin_email' => get_option('admin_email'),
         'menu' => register_mainmenu(),
-        'categories' => (object)get_categories()
+        'categories' => getCategories()
     );
     wp_localize_script('main', 'app_config', $config);
 }
@@ -72,29 +79,7 @@ function wpb_adding_scripts()
 
     wp_deregister_script('jquery');
     wp_deregister_script('wp-api');
-//echo wp_script_is('wp-api', 'registered');
 
-// $handle = 'wp-api.js';
-// $list = 'enqueued';
-//  if (wp_script_is( $handle, $list )) {
-//    return;
-
-//if () ) {
-// Use minified scripts if SCRIPT_DEBUG is not on.
-// $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-
-// wp_register_script( 'wp-api', plugins_url( 'wp-api' . $suffix . '.js', __FILE__ ), array(), '1.1', true );
-
-// $settings = array(
-//     'root'          => esc_url_raw( get_rest_url() ),
-//     'nonce'         => wp_create_nonce( 'wp_rest' ),
-//     'versionString' => 'wp/v2/',
-// );
-// wp_localize_script( 'main', 'wpApiSettings', $settings );
-// }
-
-// wp_register_script('wp-api-client', get_template_directory_uri() . '/angular/dist/assets/wp-api.js', array('jquery'),false, true);
-// wp_enqueue_script('wp-api-client');
     wp_register_script('polyfills', get_template_directory_uri() . '/angular/dist/polyfills.bundle.js', array(), false, true);
     wp_enqueue_script('polyfills');
     wp_register_script('vendor', get_template_directory_uri() . '/angular/dist/vendor.bundle.js', array(), false, true);
@@ -117,4 +102,25 @@ function wpb_adding_styles()
 
 add_action('wp_enqueue_scripts', 'wpb_adding_styles');
 
+
+//echo wp_script_is('wp-api', 'registered');
+
+// $handle = 'wp-api.js';
+// $list = 'enqueued';
+//  if (wp_script_is( $handle, $list )) {
+//    return;
+
+//if () ) {
+// Use minified scripts if SCRIPT_DEBUG is not on.
+// $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+// wp_register_script( 'wp-api', plugins_url( 'wp-api' . $suffix . '.js', __FILE__ ), array(), '1.1', true );
+
+// $settings = array(
+//     'root'          => esc_url_raw( get_rest_url() ),
+//     'nonce'         => wp_create_nonce( 'wp_rest' ),
+//     'versionString' => 'wp/v2/',
+// );
+// wp_localize_script( 'main', 'wpApiSettings', $settings );
+// }
 ?>
