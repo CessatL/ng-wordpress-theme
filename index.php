@@ -6,13 +6,13 @@
     <title><?php wp_title(); ?></title>
     <link rel="profile" href="http://gmpg.org/xfn/11"/>
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>"/>
-    <base href="/murhaf/">
+    <base href="/">
     <?php wp_head(); ?>
 </head>
 <body>
-<app>
+<app-root>
     Loading...
-</app>
+</app-root>
 <?php wp_footer(); ?>
 </body>
 </html>
