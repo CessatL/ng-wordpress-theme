@@ -1,6 +1,6 @@
 <?php
 
-function m16_setup()
+function ng_theme_setup()
 {
     /*
      *   Theme setup function
@@ -11,7 +11,7 @@ function m16_setup()
     add_theme_support('menus');
 }
 
-add_action('after_setup_theme', 'm16_setup');
+add_action('after_setup_theme', 'ng_theme_setup');
 
 function register_mainmenu()
 {
@@ -76,7 +76,6 @@ header("Access-Control-Allow-Origin: *");
 
 function wpb_adding_scripts()
 {
-
     wp_deregister_script('jquery');
     wp_deregister_script('wp-api');
 
@@ -93,10 +92,6 @@ add_action('wp_enqueue_scripts', 'wpb_adding_scripts');
 
 function wpb_adding_styles()
 {
-
-    wp_register_style('materiale-font', 'https://fonts.googleapis.com/icon?family=Material+Icons');
-    wp_enqueue_style('materiale-font');
-
     wp_enqueue_style('style', get_stylesheet_uri());
 }
 
