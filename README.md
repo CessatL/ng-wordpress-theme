@@ -36,7 +36,7 @@ A web crawler response should look something like this:
 </html>
 ```
 
-##One workflow:
+##Workflow:
 
 Whether we use webpack or gulp or both, we should be able to implement a workflow that
 
