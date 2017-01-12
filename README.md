@@ -14,11 +14,21 @@ This is an old [demo](http://ng2wordpress-murhaf.rhcloud.com) but things have be
 
  #### Use single state for the app
 
-```json
-   state{
-     app_name,
+```
+   {
+     app_name: 'My WordPress App',
      menu: [],
-     categories: []
+     categories: [],
+     config: {
+       thumbnail_size,
+       featured_size,
+       posts_per_page,
+       theme_class
+     },
+     endpoints:[
+       "projects",
+       "courses"
+     ]
    }
 ```
 State is initialized from **function.php** using `wp_localize_script` function, so it can be accessed later in angular using a service
