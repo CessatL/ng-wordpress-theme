@@ -13,14 +13,11 @@ This is an old [demo](http://ng2wordpress-murhaf.rhcloud.com) but things have be
 
 I need community help to solve the following:
 
-#### Challenges:
+##Challenges:
 
 ###Meta tags (Important):
      
-**Problem:** Most web crawlers do NOT support AJAX sites at the moment
-Imagine this scenario:
-
-Our angular app posts route scheme is `http://example.com/posts/{ID}`
+**Problem:** Most web crawlers do NOT support AJAX sites at the moment.
 
 **Possible solution:**
 
@@ -39,15 +36,15 @@ A web crawler response should look something like this:
 </html>
 ```
 
-###One workflow:
+##One workflow:
 
-Whether we are using webpack or gulp or both, we should be able to implement a workflow that
+Whether we use webpack or gulp or both, we should be able to implement a workflow that
 
- - build our angular app for development and production (like any angular starter)
- - Configure enqueued scripts names in `function.php` to match scripts names in production.
- - Serve from WP Server and refresh page on changes in development.
+ - builds our angular app for development and production (like any angular starter)
+ - Configures enqueued scripts names in `function.php` to match scripts names in production.
+ - Serves from WP Server and refresh page on changes in development.
 
-###Ideas for the theme
+##Ideas for the theme
 
  - Our app will use single state, like:
 
