@@ -1,19 +1,16 @@
 <?php
 
-require_once('robots.php');
+require_once('functions/robots.php');
+require_once('functions/config.php');
 
 //Tempurary for development
 header("Access-Control-Allow-Origin: *");
 
 function ng_theme_setup()
 {
-    if(bot_detected()){
-
-    }
     add_theme_support('menus');
 }
 
-// add_action('after_setup_theme', 'robotsRoutes');
 add_action('after_setup_theme', 'ng_theme_setup');
 
 

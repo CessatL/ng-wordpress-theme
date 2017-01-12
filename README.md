@@ -62,7 +62,7 @@ A web crawler response should look something like this:
        },
        {
          name: "pages",
-          path: "/posts",
+          path: "/pages",
           lazy: false
        },
        {
