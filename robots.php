@@ -34,14 +34,18 @@ function single_meta_tags($id){
    echo '<meta name="og:description" content="' . $desc . '" />' . "\n";
 }
 
-/** Angular Router */
+/** Router */
 function robotsRoutes(){
   $uri_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
   $uri_segments = explode('/', $uri_path);
   $route = $_SERVER["REQUEST_URI"];
   if($uri_segments[2]=="meta"){  
-    if(is_set($uri_segments[3]))
-    single_meta_tags($uri_segments[3]);
+    if($uri_segments[3]){
+      single_meta_tags($uri_segments[3]);
+    }
+    else{
+      /** TODO: Get meta tags for requested page */
+    }
   }
 }
 

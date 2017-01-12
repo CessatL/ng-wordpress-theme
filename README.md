@@ -10,18 +10,21 @@ This is an old [demo](http://ng2wordpress-murhaf.rhcloud.com) but things have be
   - Local Wordpress server ready.
   - WP REST API v2 plugin activated.
 
+##Workflow:
 
-I need community help to solve the following:
+Whether we use webpack or gulp or both, we should be able to implement a workflow that
 
-##Challenges:
+ - Build our angular app for development and production (like any angular starter)
+ - Configure enqueued scripts names in `function.php` to match scripts names in production.
+ - Serve and watch from WP Server in development.
 
-###Meta tags (Important):
+##Routes handler for robots:
      
 **Problem:** Most web crawlers do NOT support AJAX sites at the moment.
 
 **Possible solution:**
 
-Create WP function to check if a web crawler is trying to retrieve the URL, then it returns a static HTML contains only the meta tags of that post otherwise load the angular app
+Create WP function to check if a bot is trying to retrieve the URL, and return a static HTML contains only the meta tags of that post otherwise load the angular app
 
 A web crawler response should look something like this:
 ```html
@@ -35,14 +38,6 @@ A web crawler response should look something like this:
 </head>
 </html>
 ```
-
-##Workflow:
-
-Whether we use webpack or gulp or both, we should be able to implement a workflow that
-
- - Builds our angular app for development and production (like any angular starter)
- - Configures enqueued scripts names in `function.php` to match scripts names in production.
- - Serves from WP Server and refresh page on changes in development.
 
 ##Ideas for the theme
 
