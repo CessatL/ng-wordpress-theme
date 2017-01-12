@@ -10,9 +10,46 @@ This is an old [demo](http://ng2wordpress-murhaf.rhcloud.com) but things have be
   - Local Wordpress server ready.
   - WP REST API v2 plugin activated.
 
-####Possible ideas:
 
- #### Use single state for the app
+I need community help to solve the following:
+
+#### Challenges:
+
+###Meta tags (Important):
+     
+**Problem:** Most web crawlers do NOT support AJAX sites at the moment
+Imagine this scenario:
+
+Our angular app posts route scheme is `http://example.com/posts/{ID}`
+
+**Possible solution:**
+
+Create WP plugin to check if a web crawler is trying to retrieve the URL, then it returns a static HTML contains only the meta tags of that post otherwise load the angular app
+
+A web crawler response should look something like this:
+```html
+<html prefix="og: http://ogp.me/ns#">
+<head>
+  <title>Current Post Title</title>
+  <meta name="description" content="Free WordPress Theme">
+  <meta property="og:title" content="Current Post Title"/>
+  <meta property="og:description" content="Free WordPress Theme" />
+  <meta property="og:image" content="http://ia.media-imdb.com/images/rock.jpg" />
+</head>
+</html>
+```
+
+###One workflow:
+
+Whether we are using webpack or gulp or both, we should be able to implement a workflow that
+
+ - build our angular app for development and production (like any angular starter)
+ - Configure enqueued scripts names in `function.php` to match scripts names in production.
+ - Serve from WP Server and refresh page on changes in development.
+
+###Ideas for the theme
+
+ - Our app will use single state, like:
 
 ```
    {
@@ -31,10 +68,6 @@ This is an old [demo](http://ng2wordpress-murhaf.rhcloud.com) but things have be
      ]
    }
 ```
-State is initialized from **function.php** using `wp_localize_script` function, so it can be accessed later in angular using a service
-
-Advantages:
-
- - Get the global variables can include, main menu, header, sidebar, footer
- - Useful for getting theme configuration e.g. theme-colors or header height...
+This state should be initialized from **function.php** using `wp_localize_script` function, so it can be accessed later in angular using a service
   
+ - Branches for bootstrap, material...
