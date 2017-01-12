@@ -21,7 +21,7 @@ I need community help to solve the following:
 
 **Possible solution:**
 
-Create WP plugin to check if a web crawler is trying to retrieve the URL, then it returns a static HTML contains only the meta tags of that post otherwise load the angular app
+Create WP function to check if a web crawler is trying to retrieve the URL, then it returns a static HTML contains only the meta tags of that post otherwise load the angular app
 
 A web crawler response should look something like this:
 ```html
@@ -40,7 +40,7 @@ A web crawler response should look something like this:
 
 Whether we use webpack or gulp or both, we should be able to implement a workflow that
 
- - builds our angular app for development and production (like any angular starter)
+ - Builds our angular app for development and production (like any angular starter)
  - Configures enqueued scripts names in `function.php` to match scripts names in production.
  - Serves from WP Server and refresh page on changes in development.
 
@@ -59,12 +59,33 @@ Whether we use webpack or gulp or both, we should be able to implement a workflo
        posts_per_page,
        theme_class
      },
-     endpoints:[
-       "projects",
-       "courses"
+     routes:[
+       {
+         name: "posts",
+          path: "/posts",
+          lazy: false
+       },
+       {
+         name: "pages",
+          path: "/posts",
+          lazy: false
+       },
+       {
+          name: "projects",
+          path: "/projects",
+          lazy: true
+       }
      ]
    }
 ```
 This state should be initialized from **function.php** using `wp_localize_script` function, so it can be accessed later in angular using a service
   
+
+ - Dynamic angular routes:
+   
+   This can be a great feature to allow users to specify angular routes from there theme config at WP backend (haven't looked into side effects yet).
+
+   Possible solution: this [so](http://stackoverflow.com/questions/36429843/async-load-routes-data-and-build-route-instruction-for-angular-2)
+
+ - Use [Angular WordPress Module](https://github.com/MurhafSousli/ng2-wp-api) to make things even easier
  - Branches for bootstrap, material...
