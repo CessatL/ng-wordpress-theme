@@ -7,45 +7,21 @@ This is an old [demo](http://ng2wordpress-murhaf.rhcloud.com) but things have be
 
 #### Requirement:
 
-  - Local Wordpress server ready.
-  - WP REST API v2 plugin activated.
+  - local WordPress server. (You can get one from [here](https://bitnami.com/stack/wordpress))
 
-##Workflow:
+#### Quick start
 
-Whether we use webpack or gulp or both, we should be able to implement a workflow that
-
- - Build our angular app for development and production (like any angular starter)
- - Configure enqueued scripts names in `function.php` to match scripts names in production.
- - Serve and watch from WP Server in development.
-
-##Routes handler for robots:
-     
-**Problem:** Most web crawlers do NOT support AJAX sites at the moment.
-
-**Possible solution:**
-
-Create WP function to check if a bot is trying to retrieve the URL, and return a static HTML contains only the meta tags of that post otherwise load the angular app
-
-A web crawler response should look something like this:
-```html
-<html prefix="og: http://ogp.me/ns#">
-<head>
-  <title>Current Post Title</title>
-  <meta name="description" content="Free WordPress Theme">
-  <meta property="og:title" content="Current Post Title"/>
-  <meta property="og:description" content="Free WordPress Theme" />
-  <meta property="og:image" content="http://ia.media-imdb.com/images/rock.jpg" />
-</head>
-</html>
-```
+  - Download this repo into WP theme folder
+  - Navigate into the new theme and `npm install`
+  - `ng build` to get the `dist` directory
+  - Open your browser and go to wordpress server, e.g.: `http://localhost/wordpress`
 
 ##Ideas for the theme
 
- - Our app will use single state, like:
+ - `ngrx/store` for app state
 
 ```
    {
-     app_name: 'My WordPress App',
      menu: [],
      categories: [],
      config: {
@@ -73,14 +49,13 @@ A web crawler response should look something like this:
      ]
    }
 ```
-This state should be initialized from **function.php** using `wp_localize_script` function, so it can be accessed later in angular using a service
-  
+
+This state is initialized from **function.php** using `wp_localize_script` function, so it can be accessed later in angular using a service
+
+##TODOs:
 
  - Dynamic angular routes:
    
-   This can be a great feature to allow users to specify angular routes from there theme config at WP backend (haven't looked into side effects yet).
+   This can be a great feature to allow users to specify angular routes from there theme config at WP setting page
 
-   Possible solution: this [so](http://stackoverflow.com/questions/36429843/async-load-routes-data-and-build-route-instruction-for-angular-2)
-
- - Use [Angular WordPress Module](https://github.com/MurhafSousli/ng2-wp-api) to make things even easier
- - Branches for bootstrap, material...
+ - Use [Angular WordPress Module](https://github.com/MurhafSousli/ng2-wp-api) to make things requests easy.

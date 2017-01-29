@@ -10,33 +10,48 @@ function ng_theme_setup()
 {
     add_theme_support('menus');
 }
-
 add_action('after_setup_theme', 'ng_theme_setup');
-
-
 
 function wpb_adding_scripts()
 {
     wp_deregister_script('jquery');
     wp_deregister_script('wp-api');
 
-    wp_register_script('polyfills', get_template_directory_uri() . '/wpApp/dist/polyfills.bundle.js', array(), false, true);
-    wp_enqueue_script('polyfills');
-    wp_register_script('vendor', get_template_directory_uri() . '/wpApp/dist/vendor.bundle.js', array(), false, true);
-    wp_enqueue_script('vendor');
-    wp_register_script('main', get_template_directory_uri() . '/wpApp/dist/main.bundle.js', array('vendor'), false, true);
-    /** TODO: Add theme config state */
-    // register_Config();
-    wp_enqueue_script('main');
-}
+    wp_register_script('inline', get_template_directory_uri() . '/dist/inline.bundle.js', array(), false, true);
+    wp_register_script('vendor', get_template_directory_uri() . '/dist/vendor.bundle.js', array(), false, true);
+    wp_register_script('main', get_template_directory_uri() . '/dist/main.bundle.js', array(), false, true);
 
+    //Push WP settings to the app
+    $appSettings = array(
+        'menu' => array("home","blog","about"),
+        'categories' => array("news","sports","technology"),
+        'routes' => array(
+            array(
+                "name" => "Posts",
+                "path" => "/posts"
+            ),
+        ),
+        'config' => array(
+            'thumbnail_size' => "",
+            'featured_size' => "",
+            'posts_per_page' => "",
+            'theme_class' => ""
+        ),
+    );
+    wp_localize_script( 'inline', 'settings', $appSettings );
+
+    wp_enqueue_script('inline');
+    wp_enqueue_script('vendor');
+    wp_enqueue_script('main');
+
+    wp_localize_script( $handle, $name, $data ); 
+}
 add_action('wp_enqueue_scripts', 'wpb_adding_scripts');
 
 function wpb_adding_styles()
 {
-    wp_enqueue_style('style', get_stylesheet_uri());
+    wp_enqueue_style('style', get_template_directory_uri(). '/dist/styles.bundle.css');
 }
-
 add_action('wp_enqueue_scripts', 'wpb_adding_styles');
 
 

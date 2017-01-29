@@ -1,0 +1,8 @@
+{
+  "/myapp/**": {
+    "target": "http://localhost/wordpress",
+    "pathRewrite": {
+      "^/myapp": ""
+    }
+  }
+}

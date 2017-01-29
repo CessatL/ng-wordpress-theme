@@ -1,10 +1,10 @@
-import { WpAppPage } from './app.po';
+import { Ng2WpPage } from './app.po';
 
-describe('wp-app App', function() {
-  let page: WpAppPage;
+describe('ng2-wp App', function() {
+  let page: Ng2WpPage;
 
   beforeEach(() => {
-    page = new WpAppPage();
+    page = new Ng2WpPage();
   });
 
   it('should display message saying app works', () => {
