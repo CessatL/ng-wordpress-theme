@@ -1,5 +1,10 @@
 # ng-wordpress-theme
-Angular + Wordpress starter theme
+Angular starter theme for wordpress
+
+Advantages: 
+
+- SEO friendly
+- Angular for frontend, WordPress for backend
 
 This is an old [demo](http://ng2wordpress-murhaf.rhcloud.com) but things have been changed now
 
@@ -16,6 +21,8 @@ This is an old [demo](http://ng2wordpress-murhaf.rhcloud.com) but things have be
   - `ng build` to get the `dist` directory
   - Open your browser and go to wordpress server, e.g.: `http://localhost/wordpress`
 
+[![Capture.png](https://s28.postimg.org/3nyl2kh5p/Capture.png)](https://postimg.org/image/pn4zprxzt/)
+
 ##Ideas for the theme
 
  - `ngrx/store` for app state
@@ -24,29 +31,14 @@ This is an old [demo](http://ng2wordpress-murhaf.rhcloud.com) but things have be
    {
      menu: [],
      categories: [],
+     routes:[
+     ],
      config: {
        thumbnail_size,
        featured_size,
        posts_per_page,
        theme_class
-     },
-     routes:[
-       {
-         name: "posts",
-          path: "/posts",
-          lazy: false
-       },
-       {
-         name: "pages",
-          path: "/pages",
-          lazy: false
-       },
-       {
-          name: "projects",
-          path: "/projects",
-          lazy: true
-       }
-     ]
+     }
    }
 ```
 

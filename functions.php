@@ -32,10 +32,10 @@ function wpb_adding_scripts()
             ),
         ),
         'config' => array(
-            'thumbnail_size' => "",
-            'featured_size' => "",
-            'posts_per_page' => "",
-            'theme_class' => ""
+            'thumbnail_size' => "150",
+            'featured_size' => "720",
+            'posts_per_page' => "10",
+            'theme_class' => "dark"
         ),
     );
     wp_localize_script( 'inline', 'settings', $appSettings );
